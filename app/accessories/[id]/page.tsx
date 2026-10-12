@@ -734,10 +734,8 @@ export default function AccessoryDetailPage() {
         <div className="isolate grid min-h-0 min-w-0 grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Image Gallery — mirrors `/shop/[id]` (Royal V-Neck Kaftan); optional third column = detail angles */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className={`relative z-0 w-full min-h-0 min-w-0 overflow-x-clip ${hasAngleColumn ? '' : 'lg:max-w-[42rem]'}`}
+            initial={false}
+            className={`pdp-enter-from-start relative z-0 w-full min-h-0 min-w-0 overflow-x-clip ${hasAngleColumn ? '' : 'lg:max-w-[42rem]'}`}
           >
             <FavoriteHeartButton
               id={accessory.id}
@@ -983,10 +981,8 @@ export default function AccessoryDetailPage() {
 
           {/* Product Info — same buy column structure as `/shop/[id]` (no personalisation / notes) */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 text-start`}
+            initial={false}
+            className={`pdp-enter-from-end pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 text-start`}
           >
             <h1
               data-document-h1="true"

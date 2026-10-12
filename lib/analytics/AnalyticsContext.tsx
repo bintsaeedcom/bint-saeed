@@ -218,8 +218,15 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
       if (visitTimestamps.length > 200) visitTimestamps = visitTimestamps.slice(-200)
       localStorage.setItem('bs_visit_timestamps', JSON.stringify(visitTimestamps))
 
+      let geoFailedThisSession = false
+      try {
+        geoFailedThisSession = sessionStorage.getItem('bs_location_failed') === '1'
+      } catch {
+        /* ignore */
+      }
       const skipGeoFetch =
-        typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent)
+        geoFailedThisSession ||
+        (typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent))
 
       // Get location - with caching and multiple providers for reliability
       type LocationType = VisitorData['location']
@@ -296,6 +303,12 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         if (location && location.city !== 'Unknown') {
           localStorage.setItem('bs_location', JSON.stringify(location))
           localStorage.setItem('bs_location_time', Date.now().toString())
+        } else {
+          try {
+            sessionStorage.setItem('bs_location_failed', '1')
+          } catch {
+            /* ignore */
+          }
         }
       }
 

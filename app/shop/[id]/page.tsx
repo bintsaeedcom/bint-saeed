@@ -685,10 +685,8 @@ export default function ProductPage() {
         <div className="isolate grid min-h-0 min-w-0 grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Image Gallery */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="relative z-0 w-full min-h-0 min-w-0 overflow-x-clip lg:max-w-[42rem]"
+            initial={false}
+            className="pdp-enter-from-start relative z-0 w-full min-h-0 min-w-0 overflow-x-clip lg:max-w-[42rem]"
           >
             <FavoriteHeartButton
               id={product.id}
@@ -914,10 +912,8 @@ export default function ProductPage() {
 
           {/* Product Info */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className={`pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 text-start`}
+            initial={false}
+            className={`pdp-enter-from-end pdp-info relative z-[1] min-h-0 min-w-0 bg-white px-3.5 pb-3.5 pt-0 lg:sticky lg:top-28 lg:self-start lg:px-4 lg:pb-4 lg:pt-0 text-start`}
           >
             {/* Title */}
             <h1 data-document-h1="true" data-product-name="true" className="mb-1 font-rozha text-[1.75rem] md:text-[1.95rem] lg:text-[2.05rem] text-black leading-[1.15]">

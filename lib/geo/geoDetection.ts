@@ -51,29 +51,97 @@ const countryToCurrency: Record<string, string> = {
 const SUPPORTED_LANGUAGES = ['en', 'ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'nl', 'pt', 'id', 'ms']
 const LANGUAGES_FOR_CONFIRM_POPUP = ['ar', 'zh', 'ru', 'it', 'de', 'fr', 'es', 'nl', 'pt', 'id', 'ms']
 
-export async function fetchGeoData(): Promise<GeoData | null> {
-  if (typeof navigator !== 'undefined' && isLikelySearchBotUserAgent(navigator.userAgent)) {
-    return null
+const GEO_SESSION_KEY = 'bint-saeed-geo-v1'
+
+/** One lookup per page session, shared by every banner, popup and context (failures cached too). */
+let geoRequest: Promise<GeoData | null> | null = null
+
+type RawGeo = { countryCode: string; countryName?: string; city?: string }
+
+function withTimeout(ms: number): AbortSignal | undefined {
+  return typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function'
+    ? AbortSignal.timeout(ms)
+    : undefined
+}
+
+function countryDisplayName(countryCode: string): string {
+  try {
+    return new Intl.DisplayNames(['en'], { type: 'region' }).of(countryCode) ?? ''
+  } catch {
+    return ''
+  }
+}
+
+async function lookupVisitorCountry(): Promise<RawGeo | null> {
+  try {
+    const res = await fetch('/api/geo', { cache: 'no-store', signal: withTimeout(3000) })
+    if (res.ok) {
+      const data = (await res.json()) as { countryCode?: string | null; city?: string | null }
+      if (data.countryCode) {
+        return { countryCode: data.countryCode, city: data.city ?? undefined }
+      }
+    }
+  } catch {
+    /* fall through to third-party lookup */
   }
   try {
-    const res = await fetch('https://ipapi.co/json/')
+    const res = await fetch('https://ipapi.co/json/', { signal: withTimeout(4000) })
+    if (!res.ok) return null
     const data = await res.json()
-    const countryCode = (data.country_code || '').toUpperCase()
-    if (!countryCode) return null
-
-    const suggestedLanguage = countryToLanguage[countryCode] || 'en'
-    const suggestedCurrency = countryToCurrency[countryCode] || 'AED'
-
-    return {
-      countryCode,
-      countryName: data.country_name || '',
-      city: data.city,
-      suggestedLanguage: SUPPORTED_LANGUAGES.includes(suggestedLanguage) ? suggestedLanguage : 'en',
-      suggestedCurrency,
-    }
+    if (!data?.country_code) return null
+    return { countryCode: data.country_code, countryName: data.country_name, city: data.city }
   } catch {
     return null
   }
+}
+
+function toGeoData(raw: RawGeo): GeoData {
+  const countryCode = raw.countryCode.toUpperCase()
+  const suggestedLanguage = countryToLanguage[countryCode] || 'en'
+  return {
+    countryCode,
+    countryName: raw.countryName || countryDisplayName(countryCode),
+    city: raw.city,
+    suggestedLanguage: SUPPORTED_LANGUAGES.includes(suggestedLanguage) ? suggestedLanguage : 'en',
+    suggestedCurrency: countryToCurrency[countryCode] || 'AED',
+  }
+}
+
+function readSessionGeo(): GeoData | null | undefined {
+  try {
+    const stored = sessionStorage.getItem(GEO_SESSION_KEY)
+    if (stored == null) return undefined
+    return JSON.parse(stored) as GeoData | null
+  } catch {
+    return undefined
+  }
+}
+
+function writeSessionGeo(geo: GeoData | null) {
+  try {
+    sessionStorage.setItem(GEO_SESSION_KEY, JSON.stringify(geo))
+  } catch {
+    /* ignore */
+  }
+}
+
+export function fetchGeoData(): Promise<GeoData | null> {
+  if (typeof window === 'undefined') return Promise.resolve(null)
+  if (isLikelySearchBotUserAgent(navigator.userAgent)) return Promise.resolve(null)
+  if (geoRequest) return geoRequest
+
+  const cached = readSessionGeo()
+  if (cached !== undefined) {
+    geoRequest = Promise.resolve(cached)
+    return geoRequest
+  }
+
+  geoRequest = lookupVisitorCountry().then((raw) => {
+    const geo = raw ? toGeoData(raw) : null
+    writeSessionGeo(geo)
+    return geo
+  })
+  return geoRequest
 }
 
 export const REGIONAL_EXPERIENCE_KEY = 'bint-saeed-regional-experience'

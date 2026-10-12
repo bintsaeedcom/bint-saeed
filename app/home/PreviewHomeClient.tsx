@@ -545,8 +545,8 @@ function StrandsFeatureCarousel({
 
 /** Home media — structured under /public/home; WebP preferred, originals kept beside + at legacy paths. */
 const HOME_MEDIA = {
-  heroMobile: '/home/hero/mobile/bint-saeed-home-hero-mobile-burgundy-collection.webp',
-  heroDesktop: '/home/hero/desktop/bint-saeed-home-hero-desktop-editorial-abayas.webp',
+  heroMobile: '/home/hero/bint-saeed-home-hero-black-abaya-monogram-cuff.webp',
+  heroDesktop: '/home/hero/bint-saeed-home-hero-black-abaya-monogram-cuff.webp',
   personalisationHiddenPocket: '/home/personalisation/bint-saeed-home-personalisation-hidden-pocket.webp',
   panelBackground: '/home/backgrounds/bint-saeed-home-panel-background-01.webp',
   editorialGazelles: '/home/editorial/bint-saeed-home-editorial-abu-dhabi-gazelles.webp',
@@ -1262,25 +1262,28 @@ function HeroSection() {
       {/* Background — mobile/tablet vs desktop art direction */}
       <motion.div
         style={reduceMotion ? undefined : { scale }}
-        className="pointer-events-none absolute inset-0 overflow-hidden will-change-transform"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-[var(--site-header-height,0px)] overflow-hidden transition-[top] duration-300 ease-out will-change-transform"
       >
-        {/* Mobile + tablet — portrait burgundy collection (WebP; JPG kept beside it) */}
+        {/* Face sits near the top of the frame — image starts below the header so it is never covered. */}
         <Image
           src={HOME_MEDIA.heroMobile}
           alt={withBrandAlt(copy.mediaAlts.heroMobile, language)}
           fill
-          className="object-cover object-[center_28%] scale-[1.02] saturate-[0.92] contrast-[1.03] brightness-[0.96] lg:hidden"
+          className="object-cover object-top scale-[1.02] saturate-[0.92] contrast-[1.03] brightness-[0.96] lg:hidden"
           sizes="(max-width: 1023px) 100vw, 1px"
           priority
         />
-        {/* Desktop — editorial abayas (WebP; JPG + legacy /IMG_2821.JPG kept) */}
         <Image
           src={HOME_MEDIA.heroDesktop}
           alt={withBrandAlt(copy.mediaAlts.heroDesktop, language)}
           fill
-          className="hidden object-cover object-[center_28%] scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97] lg:block"
+          className="hidden object-cover object-top scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97] lg:block"
           sizes="100vw"
           priority
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-[#1a0210]/70 via-[#1a0210]/30 to-transparent"
+          aria-hidden
         />
       </motion.div>
 
@@ -1297,7 +1300,7 @@ function HeroSection() {
                   data-hero-h1="true"
                   initial={false}
                   style={reduceMotion ? undefined : { y: titleY }}
-                  className="mb-8 max-w-[85vw] font-rozha text-[clamp(32px,5vw,64px)] font-normal leading-[1.15] tracking-[-0.01em] !text-[#e8d8c8] md:max-w-[100vw] md:whitespace-nowrap"
+                  className="mb-8 max-w-[85vw] font-rozha text-[clamp(32px,5vw,64px)] font-normal leading-[1.15] tracking-[-0.01em] !text-[#e8d8c8] md:max-w-[100vw] md:text-balance min-[1440px]:whitespace-nowrap"
                 >
                   {copy.heroHeadline}
                 </motion.h1>

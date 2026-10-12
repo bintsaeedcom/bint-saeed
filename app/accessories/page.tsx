@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import LocaleLink from '@/components/LocaleLink'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import Image from 'next/image'
@@ -262,12 +262,7 @@ export default function AccessoriesPage() {
         <div className="container mx-auto px-6 lg:px-12">
           <div className={`relative flex flex-col justify-end text-brand-darkRed text-start`}>
             {/* Back Button */}
-            <motion.div
-              initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-3"
-            >
+            <motion.div initial={false} className="pdp-enter-fade mb-3">
               <AppPageWayfinding
                 rtl={isRTL}
                 segments={[
@@ -277,12 +272,7 @@ export default function AccessoriesPage() {
               />
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-start"
-            >
+            <motion.div initial={false} className="pdp-enter-fade text-start">
               <span className="mb-4 block font-montserrat text-[10px] font-medium uppercase tracking-[0.28em] text-[#6f1524] sm:tracking-[0.34em]">
                 {ui.accessories.collectionEyebrow}
               </span>
@@ -786,19 +776,16 @@ function AccessoryCard({
   ui: CommerceUi
   onQuickBuy: (accessory: Accessory) => void
 }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-10%' })
   const accessoryName = getLocalizedAccessoryDisplayName(accessory, language)
 
   return (
     <motion.div
-      ref={ref}
       layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      initial={false}
       exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="h-full"
+      transition={{ duration: 0.4 }}
+      className="pdp-enter-fade h-full"
+      style={{ animationDelay: `${Math.min(index, 8) * 0.05}s` }}
     >
       <LocaleLink
         href={`/accessories/${accessory.id}`}

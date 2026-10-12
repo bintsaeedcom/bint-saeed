@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react'
 import { isLikelySearchBotUserAgent } from '@/lib/bots/isLikelySearchBot'
+import { fetchGeoData } from '@/lib/geo/geoDetection'
 import {
   cartSubtotalInCurrency,
   formatAmountForCurrency,
@@ -112,17 +113,13 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      try {
-        const response = await fetch('https://ipapi.co/json/')
-        const data = await response.json()
-        const countryCode = data.country_code as string
-        const detectedCurrencyCode = countryToCurrency[countryCode] || 'AED'
+      const geo = await fetchGeoData()
+      if (geo?.countryCode) {
+        const detectedCurrencyCode = countryToCurrency[geo.countryCode] || 'AED'
         const found = currencies.find((c) => c.code === detectedCurrencyCode)
         if (found) {
           setCurrencyState(found)
         }
-      } catch {
-        console.log('Currency detection failed, defaulting to AED')
       }
       setIsInitialized(true)
     }

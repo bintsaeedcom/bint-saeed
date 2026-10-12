@@ -689,6 +689,41 @@ button:focus-visible {
   animation: shimmer 1.5s infinite;
 }
 
+/* CSS-only entrance: runs on first paint, never waits for JS hydration (slow phones saw blank PDPs). */
+@keyframes pdpEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--pdp-enter-x, 0px), 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pdp-enter-from-start {
+  --pdp-enter-x: -30px;
+  animation: pdpEnter 0.6s ease-out both;
+}
+
+.pdp-enter-from-end {
+  --pdp-enter-x: 30px;
+  animation: pdpEnter 0.6s ease-out 0.1s both;
+}
+
+.pdp-enter-fade {
+  --pdp-enter-x: 0px;
+  animation: pdpEnter 0.6s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdp-enter-from-start,
+  .pdp-enter-from-end,
+  .pdp-enter-fade {
+    animation: none;
+  }
+}
+
 /* Underline Animation */
 .underline-hover {
   position: relative;
