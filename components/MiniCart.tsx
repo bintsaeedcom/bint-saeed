@@ -23,7 +23,7 @@ import { accessories } from '@/data/accessories'
 import { getLocalizedAccessoryDisplayName } from '@/lib/accessories/accessoryCatalogCopyI18n'
 import { getProductHref } from '@/lib/products/links'
 import { getCartLineImageAlt, getProductImageAlt, withBrandAlt } from '@/lib/products/imageAlt'
-import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { productImageSrc } from '@/lib/products/shopImage'
 import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
 import {
   glassOverlayPanel,
@@ -316,7 +316,6 @@ export default function MiniCart({ isOpen, onClose }: MiniCartProps) {
                               language,
                             )}
                             fill
-                            unoptimized={isWebshopPicturePath(item.image)}
                             className="img-zoom object-cover object-top"
                             sizes="80px"
                           />

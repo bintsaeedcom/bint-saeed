@@ -18,7 +18,7 @@ import { trackEvent } from '@/lib/analytics/tracking'
 import AppPageWayfinding from '@/components/AppPageWayfinding'
 import { SITE_CONTENT_TOP_PAD } from '@/lib/ui/editorialPageChrome'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
-import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { productImageSrc } from '@/lib/products/shopImage'
 import { getEstimatedShippingFee } from '@/lib/pricing'
 import { resolveCartShippingMessages } from '@/lib/shipping/resolveCartShippingMessages'
 import { cartRequiresPhysicalShipping } from '@/lib/giftCards/cartDetection'
@@ -222,7 +222,6 @@ export default function CartPage() {
                           language,
                         )}
                         fill
-                        unoptimized={isWebshopPicturePath(item.image)}
                         className="img-zoom object-cover object-top"
                         sizes="(max-width: 768px) 90px, 115px"
                       />

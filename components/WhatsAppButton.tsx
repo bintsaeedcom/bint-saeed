@@ -83,7 +83,7 @@ export default function WhatsAppButton() {
     }
     document.addEventListener('keydown', onKey)
     document.addEventListener('mousedown', onPointer)
-    document.addEventListener('touchstart', onPointer)
+    document.addEventListener('touchstart', onPointer, { passive: true })
     return () => {
       document.removeEventListener('keydown', onKey)
       document.removeEventListener('mousedown', onPointer)

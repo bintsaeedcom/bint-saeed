@@ -12,6 +12,7 @@ import FavoriteHeartButton from '@/components/FavoriteHeartButton'
 import { WISHLIST_HEART_GLASS_CLASS } from '@/components/ProductWishlistHeart'
 import NoTranslate from '@/components/NoTranslate'
 import QuickBuy from '@/components/QuickBuy'
+import { garmentStockUi } from '@/lib/i18n/garmentStockUi'
 import { accessoryDisplaySize } from '@/lib/accessories/accessorySizeLabel'
 import {
   accessories,
@@ -45,7 +46,7 @@ import { trackEvent } from '@/lib/analytics/tracking'
 import { resolveAccessoryCategoryId } from '@/lib/accessories/accessoryRouteAliases'
 import { getAccessoryCarouselAlt, buildAccessoriesCollectionJsonLd } from '@/lib/accessories/accessoryJsonLd'
 import { getLocalizedAccessoryDisplayName } from '@/lib/accessories/accessoryCatalogCopyI18n'
-import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { productImageSrc } from '@/lib/products/shopImage'
 import { SITE_CONTENT_TOP_PAD, SITE_HEADER_STICKY_TOP } from '@/lib/ui/editorialPageChrome'
 import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 import { glassDrawer, glassDrawerWash, glassTextMuted, glassTextTitle } from '@/lib/ui/glassClasses'
@@ -635,6 +636,7 @@ export default function AccessoriesPage() {
             colors: quickBuyAccessory.colors,
             category: quickBuyAccessory.category,
             productUrl: `/accessories/${quickBuyAccessory.id}`,
+            soldOut: !quickBuyAccessory.inStock,
           }}
         />
       ) : null}
@@ -830,7 +832,6 @@ function AccessoryCard({
               alt={getAccessoryCarouselAlt(accessory, language, isRTL)}
               fill
               sizes="(max-width: 1279px) 50vw, 33vw"
-              unoptimized={isWebshopPicturePath(accessory.images[0] ?? '')}
               className="pointer-events-none img-zoom object-cover object-center transition-all duration-700 group-hover:scale-105"
             />
           </div>
@@ -884,6 +885,11 @@ function AccessoryCard({
             <span className={PRODUCT_GRID_CTA_LINK}>
               {ui.shop.discover}
             </span>
+            {!accessory.inStock ? (
+              <span className={`${PRODUCT_GRID_CTA_LINK} opacity-60`}>
+                {garmentStockUi(language).soldOut}
+              </span>
+            ) : (
             <button
               type="button"
               onClick={(e) => {
@@ -897,6 +903,7 @@ function AccessoryCard({
               <FiShoppingBag className="h-3 w-3 shrink-0" aria-hidden />
               {ui.quickBuy.buyNow}
             </button>
+            )}
           </div>
         </div>
       </LocaleLink>

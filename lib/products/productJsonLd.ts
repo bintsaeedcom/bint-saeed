@@ -10,6 +10,7 @@ import type { AppLocale } from '@/lib/i18n/routing'
 import { schemaInLanguageForLocale } from '@/lib/i18n/bcp47'
 import { brandNameForLocale } from '@/lib/i18n/brandProperNouns'
 import { resolveProductSku } from '@/lib/products/sku'
+import { isColorSoldOut } from '@/lib/products/garmentStock'
 import { getProductColorOptions } from '@/lib/products/productColorAvailability'
 import { getPdpSizeOptions } from '@/lib/shopProductOptions'
 import { getProductPdpContent } from '@/data/productPdpContent'
@@ -228,13 +229,15 @@ function schemaSharedFields(
   }
 }
 
-function buildOffer(product: Product, pageUrl: string) {
+function buildOffer(product: Product, pageUrl: string, color?: string) {
   return withMerchantListingOfferFields(
     {
       '@type': 'Offer' as const,
       priceCurrency: 'AED',
       price: String(product.price),
-      availability: 'https://schema.org/InStock',
+      availability: isColorSoldOut(product, color)
+        ? 'https://schema.org/OutOfStock'
+        : 'https://schema.org/InStock',
       url: pageUrl,
       itemCondition: 'https://schema.org/NewCondition',
       seller: {
@@ -281,7 +284,7 @@ function buildProductNode(
     color: color || product.colors[0]?.name,
     size: sizes.join('/'),
     image: buildImageObjects(product, images, color, input.lang, input.locale),
-    offers: buildOffer(product, input.pageUrl),
+    offers: buildOffer(product, input.pageUrl, color),
     ...schemaSharedFields(product, slug, input.locale, color, input.lang),
     datePublished: '2026-04-22',
     dateModified: new Date().toISOString().slice(0, 10),

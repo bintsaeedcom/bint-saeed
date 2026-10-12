@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { normalizeCurrencyCode } from '@/lib/pricing'
+import { isCatalogLineSoldOut } from '@/lib/products/garmentStock'
 import type { CheckoutCartItem, CheckoutClientContext, ParsedCheckoutRequest } from './types'
 
 export const MAX_CHECKOUT_LINE_ITEMS = 80
@@ -108,6 +109,13 @@ export function parseCheckoutRequestBody(
     }
     const parsed = parseCartItem(item as Record<string, unknown>)
     if (!parsed) return { error: 'Invalid cart.', status: 400 }
+    if (isCatalogLineSoldOut(parsed)) {
+      const variant = [parsed.color, parsed.size].filter(Boolean).join(', ')
+      return {
+        error: `${parsed.name}${variant ? ` (${variant})` : ''} is sold out. Please remove it from your bag to continue.`,
+        status: 409,
+      }
+    }
     items.push(parsed)
   }
 

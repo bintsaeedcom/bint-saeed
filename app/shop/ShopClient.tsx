@@ -15,7 +15,6 @@ import { products as staticProducts, categories, isVisibleOnShopGrid } from '@/d
 import ProductWishlistHeart from '@/components/ProductWishlistHeart'
 import QuickBuy from '@/components/QuickBuy'
 import {
-  isWebshopPicturePath,
   productImageSrc,
   shopGridPrimaryColor,
   shopGridPrimaryImage,
@@ -39,6 +38,9 @@ import {
   softGridColourBeadStyle,
 } from '@/lib/ui/productGridColourDot'
 import { productGridAddToBagClass } from '@/lib/ui/productGridSizeChip'
+import { areAllColorsSoldOut } from '@/lib/products/garmentStock'
+import { getProductColorOptions } from '@/lib/products/productColorAvailability'
+import { garmentStockUi } from '@/lib/i18n/garmentStockUi'
 import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
 import CodesOrganicBand from '@/components/CodesOrganicBand'
 
@@ -431,7 +433,6 @@ export default function ShopClient() {
                       })}
                       fill
                       sizes="(max-width: 1024px) 50vw, 33vw"
-                      unoptimized={isWebshopPicturePath(gridImage)}
                       className="pointer-events-none img-zoom object-cover object-top"
                       priority={false}
                     />
@@ -473,6 +474,15 @@ export default function ShopClient() {
                       />
                     ))}
                   </div>
+                  {areAllColorsSoldOut(product, getProductColorOptions(product)) ? (
+                    <button
+                      type="button"
+                      disabled
+                      className={`relative z-20 ${productGridAddToBagClass(false)} cursor-not-allowed opacity-60 hover:border-brand-darkRed/30 hover:bg-transparent`}
+                    >
+                      <span className="truncate">{garmentStockUi(language).soldOut}</span>
+                    </button>
+                  ) : (
                   <button
                     type="button"
                     onClick={(e) => {
@@ -486,6 +496,7 @@ export default function ShopClient() {
                     <FiShoppingBag className="h-3.5 w-3.5 shrink-0" aria-hidden />
                     <span className="truncate">{ui.quickBuy.addToBag}</span>
                   </button>
+                  )}
                 </div>
               </article>
             </li>

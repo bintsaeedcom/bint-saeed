@@ -38,6 +38,7 @@ export type PdpAtcErrorCode =
   | 'size_required'
   | 'colour_required'
   | 'personalisation_required'
+  | 'sold_out'
   | 'unknown'
 
 const VIEW_ITEM_KEYS = new Set<string>()

@@ -16,7 +16,7 @@ import { getWishlistCopy } from '@/lib/i18n/wishlistCopyI18n'
 import { getCartEmptyDiscoverCopy } from '@/lib/i18n/cartEmptyDiscoverI18n'
 import { getProductHref } from '@/lib/products/links'
 import { withBrandAlt } from '@/lib/products/imageAlt'
-import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { productImageSrc } from '@/lib/products/shopImage'
 
 export default function WishlistPage() {
   const { items, removeItem } = useWishlistStore()
@@ -87,7 +87,6 @@ export default function WishlistPage() {
                         src={productImageSrc(item.image)}
                         alt={withBrandAlt(item.name, language)}
                         fill
-                        unoptimized={isWebshopPicturePath(item.image)}
                         className="object-cover object-top"
                         sizes="80px"
                       />

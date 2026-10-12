@@ -33,6 +33,8 @@ interface StickyAddToCartProps {
   customLength?: string
   notes?: string
   customisationMessage?: string
+  soldOut?: boolean
+  soldOutLabel?: string
   /** Fallback scroll distance if the primary ATC node is missing */
   showThreshold?: number
   onAtcAttempt?: () => void
@@ -52,6 +54,8 @@ export default function StickyAddToCart({
   customLength,
   notes,
   customisationMessage,
+  soldOut = false,
+  soldOutLabel,
   showThreshold = 480,
   onAtcAttempt,
   onAtcSuccess,
@@ -129,6 +133,10 @@ export default function StickyAddToCart({
       document.getElementById('color-selection')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
+    if (soldOut) {
+      onAtcError?.('sold_out')
+      return
+    }
 
     addItem({
       id: product.id,
@@ -196,14 +204,18 @@ export default function StickyAddToCart({
               <button
                 type="button"
                 onClick={handleAddToCart}
-                disabled={isAdded}
+                disabled={isAdded || soldOut}
                 className={`relative inline-flex min-h-[46px] min-w-[8.75rem] max-w-[52%] shrink-0 items-center justify-center gap-1.5 rounded-[4px] border px-3.5 font-montserrat text-[11px] uppercase tracking-[0.12em] transition-colors ${
  isAdded
  ? 'border-green-600 bg-green-600 text-white'
+ : soldOut
+ ? 'cursor-not-allowed border-brand-darkRed bg-brand-darkRed text-white opacity-50'
  : 'border-brand-darkRed bg-brand-darkRed text-white hover:bg-brand-darkMagenta active:bg-brand-clayRed'
  } `}
               >
-                {isAdded ? (
+                {soldOut ? (
+                  <span className="truncate">{soldOutLabel ?? ui.stickyAddToCart.addToBag}</span>
+                ) : isAdded ? (
                   <>
                     <FiCheck className="h-4 w-4 shrink-0" />
                     <span className="truncate">{ui.stickyAddToCart.added}</span>

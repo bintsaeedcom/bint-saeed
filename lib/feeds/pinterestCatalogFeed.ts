@@ -18,6 +18,7 @@ import {
   getProductImagesForColor,
 } from '@/lib/products/productColorAvailability'
 import { resolveProductSku } from '@/lib/products/sku'
+import { isColorSoldOut } from '@/lib/products/garmentStock'
 import { getListedPrice } from '@/lib/pricing'
 import type { SupportedCurrency } from '@/lib/pricing/types'
 
@@ -219,7 +220,7 @@ function buildShopItems(products: Product[]): CatalogItem[] {
         link,
         image_link: absoluteFeedImageUrl(primary),
         additional_image_link: additionalImageLinks(images, absoluteFeedImageUrl),
-        availability: 'in stock',
+        availability: isColorSoldOut(product, colorName) ? 'out of stock' : 'in stock',
         condition: 'new',
         brand: 'Bint Saeed',
         mpn: sku.slice(0, 70),

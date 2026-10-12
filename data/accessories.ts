@@ -291,7 +291,7 @@ export const accessories: Accessory[] = [
     materialsAr: 'خرز لازورد طبيعي، مشبك مطلي بالذهب 18 قيراط',
     colors: [
       { name: 'Lapis Lazuli', nameAr: 'لازورد', hex: '#1e40af' }],
-    inStock: true,
+    inStock: false,
   },
 
   // Earrings — Al Ain Oasis & Al Quaa lines
@@ -311,7 +311,7 @@ export const accessories: Accessory[] = [
     materialsAr:
       'ملاكيت طبيعي، حجر شمس، روزيت القوع من العقيق، هيمايت مطلي بالذهب 18 قيراط، زركونيا في نحاس خالٍ من النيكل مطلي بالذهب 14 قيراط',
     colors: [{ name: 'Malachite Green', nameAr: 'أخضر ملاكيت', hex: '#1f7a5e' }],
-    inStock: true,
+    inStock: false,
     isNew: true,
   },
   {
@@ -330,7 +330,7 @@ export const accessories: Accessory[] = [
     materialsAr:
       'كوارتز وردي طبيعي، روزيت القوع من العقيق، هيمايت مطلي بالذهب 18 قيراط، مسمار زركونيا وردية بقطع كمّثري في نحاس مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Rose Quartz Pink', nameAr: 'وردي كوارتز', hex: '#f4b8c5' }],
-    inStock: true,
+    inStock: false,
     isBestseller: true,
   },
   {
@@ -349,7 +349,7 @@ export const accessories: Accessory[] = [
     materialsAr:
       'يشم برتقالي اللون طبيعي، حجر شمس، روزيت القوع من العقيق، هيمايت مطلي بالذهب 18 قيراط، زركونيا في نحاس خالٍ من النيكل مطلي بالذهب 14 قيراط',
     colors: [{ name: 'Orange Coloured Jade', nameAr: 'يشم برتقالي اللون', hex: '#ea580c' }],
-    inStock: true,
+    inStock: false,
   },
   {
     id: 'al-quaa-earrings-lapis-lazuli',
@@ -367,7 +367,7 @@ export const accessories: Accessory[] = [
     materialsAr:
       'لازورد طبيعي، روزيت القوع من العقيق، هيمايت مطلي بالذهب 18 قيراط، مسمار زركونيا شفافة بقطع كمّثري في نحاس مطلي بالذهب 18 قيراط',
     colors: [{ name: 'Lapis Lazuli', nameAr: 'لازورد', hex: '#1e40af' }],
-    inStock: true,
+    inStock: false,
   },
 
   // Bracelets

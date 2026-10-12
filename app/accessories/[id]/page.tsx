@@ -22,6 +22,7 @@ import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import { productPageUi } from '@/lib/i18n/productPageUi'
+import { garmentStockUi } from '@/lib/i18n/garmentStockUi'
 import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 import { usePdpAnalytics } from '@/lib/analytics/usePdpAnalytics'
@@ -138,6 +139,7 @@ export default function AccessoryDetailPage() {
   const { isRTL, t, language } = useLanguage()
   const ui = commerceUi(language)
   const productUi = productPageUi(language)
+  const stockUi = garmentStockUi(language)
   const galleryAria = getPdpGalleryAriaCopy(language)
   const thumbConnected = Boolean(thumbsSwiper && !thumbsSwiper.destroyed)
   const mainGalleryModules = useMemo(
@@ -209,6 +211,7 @@ export default function AccessoryDetailPage() {
   /** Catalog title for crumbs — not the long PDP headline. */
   const breadcrumbProductLabel = getLocalizedAccessoryDisplayName(accessory, language)
 
+  const soldOut = !accessory.inStock
   const displayUnitPrice = convertPrice(accessory.price, accessory.id)
   const colorLabelForAnalytics =
     selectedColor ||
@@ -232,6 +235,11 @@ export default function AccessoryDetailPage() {
 
   const handleAddToCart = () => {
     pdpAnalytics.trackAtcAttempt('primary')
+    if (soldOut) {
+      pdpAnalytics.trackAtcError('primary', 'sold_out')
+      toast.error(stockUi.soldOut)
+      return
+    }
     if (!selectedColor && accessory.colors.length > 1) {
       pdpAnalytics.trackAtcError('primary', 'colour_required')
       toast.error(ui.accessories.selectColour)
@@ -800,6 +808,7 @@ export default function AccessoryDetailPage() {
                           <PdpGalleryImage
                             src={image}
                             alt={imageAltFor(image, index)}
+                            sizes="96px"
                             className={`img-zoom ${galleryImageClass} transition-opacity group-hover:opacity-80`}
                           />
                         )}
@@ -934,6 +943,7 @@ export default function AccessoryDetailPage() {
                             <PdpGalleryImage
                               src={image}
                               alt={imageAltFor(image, index)}
+                              sizes="96px"
                               className={`img-zoom ${galleryImageClass} transition-opacity group-hover:opacity-80`}
                             />
                           )}
@@ -1051,13 +1061,16 @@ export default function AccessoryDetailPage() {
                   {sizeLabel}
                 </span>
               </div>
-              <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
-                {productUi.jewelleryLeadTime}
-              </p>
+              {!soldOut ? (
+                <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
+                  {productUi.jewelleryLeadTime}
+                </p>
+              ) : null}
             </div>
 
             {/* Quantity & Add to Cart */}
             <div className="mb-1 flex flex-col gap-2 sm:flex-row sm:gap-3">
+              {!soldOut ? (
               <div className={`flex w-full items-center justify-center border border-brand-stone/50 sm:w-auto sm:justify-start ${CTA_BUTTON_RADIUS}`}>
                 <button
                   type="button"
@@ -1077,20 +1090,25 @@ export default function AccessoryDetailPage() {
                   <FiPlus className="h-4 w-4" />
                 </button>
               </div>
+              ) : null}
 
               <button
                 type="button"
                 onClick={handleAddToCart}
+                disabled={soldOut}
+                aria-disabled={soldOut}
                 data-pdp-primary-atc
-                  className={`w-full px-6 py-3 sm:flex-1 ${PDP_PRIMARY_CTA}`}
-                data-cursor-hover
+                className={`w-full px-6 py-3 sm:flex-1 ${PDP_PRIMARY_CTA} ${
+                  soldOut ? 'cursor-not-allowed opacity-50 hover:bg-brand-darkRed' : ''
+                }`}
+                data-cursor-hover={soldOut ? undefined : true}
               >
-                {productUi.addToBag}
+                {soldOut ? stockUi.soldOut : productUi.addToBag}
               </button>
 
             </div>
 
-            {(currency.code === 'AED' || currency.code === 'SAR') ? (
+            {!soldOut && (currency.code === 'AED' || currency.code === 'SAR') ? (
               <TamaraProductWidget
                 amount={convertPrice(accessory.price, accessory.id) * quantity}
                 currency={currency.code}
@@ -1098,7 +1116,7 @@ export default function AccessoryDetailPage() {
                 onPromoClick={() => pdpAnalytics.trackInstallmentClick('tamara')}
               />
             ) : null}
-            {['AED', 'SAR', 'KWD'].includes(currency.code) ? (
+            {!soldOut && ['AED', 'SAR', 'KWD'].includes(currency.code) ? (
               <TabbyPromoSnippet
                 price={convertPrice(accessory.price, accessory.id) * quantity}
                 currency={currency.code}
@@ -1177,6 +1195,7 @@ export default function AccessoryDetailPage() {
                           <PdpGalleryImage
                             src={relatedImage}
                             alt={getAccessoryImageAlt(item, relatedImage, 0, language)}
+                            sizes="(max-width: 768px) 50vw, 25vw"
                             className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                           />
                         </div>
@@ -1285,6 +1304,8 @@ export default function AccessoryDetailPage() {
             : selectedColor)
         }
         quantity={quantity}
+        soldOut={soldOut}
+        soldOutLabel={stockUi.soldOut}
         onAtcAttempt={() => pdpAnalytics.trackAtcAttempt('sticky')}
         onAtcSuccess={(qty) => pdpAnalytics.trackAtcSuccess('sticky', qty)}
         onAtcError={(code) => pdpAnalytics.trackAtcError('sticky', code)}

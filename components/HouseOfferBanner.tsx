@@ -83,9 +83,14 @@ export default function HouseOfferBanner() {
       return
     }
 
+    let written = ''
     const sync = () => {
       const h = Math.ceil(el.getBoundingClientRect().height)
-      root.style.setProperty('--house-offer-banner', `${h || 34}px`)
+      const next = `${h || 34}px`
+      // Root custom-property writes restyle the whole document — skip no-ops.
+      if (next === written) return
+      written = next
+      root.style.setProperty('--house-offer-banner', next)
     }
     sync()
 
@@ -97,7 +102,7 @@ export default function HouseOfferBanner() {
       window.removeEventListener('resize', sync)
       root.style.setProperty('--house-offer-banner', BANNER_HEIGHT_FALLBACK)
     }
-  }, [visible, language, line])
+  }, [visible, language])
 
   if (!visible) return null
 
@@ -124,12 +129,24 @@ export default function HouseOfferBanner() {
           isRTL ? 'flex-row-reverse' : ''
         }`}
       >
-        <p
-          key={line}
-          className="min-w-0 max-w-[min(100%,52rem)] animate-[houseOfferFade_0.45s_ease] text-center font-montserrat text-[9px] font-medium uppercase leading-snug tracking-[0.12em] text-[#e8d8c8]/90 sm:text-[10px] sm:tracking-[0.16em]"
-        >
-          {line}
-        </p>
+        {/* Every line shares one grid cell so the strip keeps the tallest line's
+            height — rotating a wrapping line must never resize the fixed header. */}
+        <div className="grid min-w-0 max-w-[min(100%,52rem)] items-center">
+          {lines.map((text) => {
+            const active = text === line
+            return (
+              <p
+                key={active ? `active-${text}` : text}
+                aria-hidden={active ? undefined : true}
+                className={`col-start-1 row-start-1 min-w-0 text-center font-montserrat text-[9px] font-medium uppercase leading-snug tracking-[0.12em] text-[#e8d8c8]/90 sm:text-[10px] sm:tracking-[0.16em] ${
+                  active ? 'animate-[houseOfferFade_0.45s_ease]' : 'invisible'
+                }`}
+              >
+                {text}
+              </p>
+            )
+          })}
+        </div>
         <button
           type="button"
           onClick={dismiss}

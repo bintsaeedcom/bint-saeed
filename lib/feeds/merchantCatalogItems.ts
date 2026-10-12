@@ -18,6 +18,7 @@ import {
   getProductImagesForColor,
 } from '@/lib/products/productColorAvailability'
 import { resolveProductSku } from '@/lib/products/sku'
+import { isVariantSoldOut } from '@/lib/products/garmentStock'
 import { getPdpSizeOptions } from '@/lib/shopProductOptions'
 import { buildMerchantAccessoryDescription, buildMerchantProductDescription } from '@/lib/feeds/merchantProductDescription'
 
@@ -192,7 +193,9 @@ function buildShopItems(products: Product[]): MerchantCatalogItem[] {
           link,
           image_link,
           additional_image_link,
-          availability: 'in_stock',
+          availability: isVariantSoldOut(product, { color: colorName, size })
+            ? 'out_of_stock'
+            : 'in_stock',
           condition: 'new',
           brand: 'Bint Saeed',
           identifier_exists: 'false',

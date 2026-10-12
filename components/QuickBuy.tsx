@@ -16,6 +16,16 @@ import { formatGarmentEstimatedShipWindow } from '@/lib/shipping/formatGarmentEs
 import { PdpFasterDeliveryContact } from '@/components/pdp/PdpFasterDeliveryContact'
 import { getProductHref } from '@/lib/products/links'
 import { resolveProductSku } from '@/lib/products/sku'
+import {
+  areAllColorsSoldOut,
+  firstAvailableColor,
+  firstAvailableSize,
+  isColorSoldOut,
+  isSizeSoldOut,
+  isVariantLowStock,
+  isVariantSoldOut,
+} from '@/lib/products/garmentStock'
+import { garmentStockUi } from '@/lib/i18n/garmentStockUi'
 import { metaCatalogIdForCartLine } from '@/lib/analytics/metaCatalogIds'
 import { trackMetaEvent } from '@/lib/analytics/tracking'
 import toast from 'react-hot-toast'
@@ -25,7 +35,7 @@ import {
   getProductColorOptions,
   getProductImagesForColor,
 } from '@/lib/products/productColorAvailability'
-import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { productImageSrc } from '@/lib/products/shopImage'
 import {
   productIsOneSizeOnly,
   productShowsSizeSelector,
@@ -76,6 +86,8 @@ interface QuickBuyProps {
     colors: { name: string; nameAr?: string; hex: string }[]
     category?: string
     productUrl?: string
+    /** Catalogue-level stock flag (accessories); garments use `garmentStock` rules by slug. */
+    soldOut?: boolean
   }
 }
 
@@ -91,12 +103,23 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
   const pdpUi = productPageUi(language)
+  const stockUi = garmentStockUi(language)
   const uaeShippingNote = withShippingAmount(
     ui.cart.freeUaeShipping,
     formatAmountForCurrency(getUaeFreeShippingThreshold(currency.code), currency.code),
   )
 
   const colorOptions = useMemo(() => getProductColorOptions(product), [product])
+  const stockProduct = { slug: product.slug ?? '' }
+  const productSoldOut =
+    Boolean(product.soldOut) || areAllColorsSoldOut(stockProduct, colorOptions)
+  const variantSoldOut =
+    productSoldOut ||
+    isVariantSoldOut(stockProduct, { color: selectedColor, size: selectedSize })
+  const variantLowStock = isVariantLowStock(stockProduct, {
+    color: selectedColor,
+    size: selectedSize,
+  })
   const showSizeSelector =
     product.sizes.length > 1 &&
     productShowsSizeSelector(product.category ?? 'Kaftans', product.sizes, product.slug)
@@ -124,16 +147,20 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
 
   useEffect(() => {
     if (!isOpen) return
-    const available = colorOptions.map((color) => color.name)
-    setSelectedColor(available[0] ?? '')
-    if (initialSize && product.sizes.includes(initialSize)) {
+    const slugOnly = { slug: product.slug ?? '' }
+    setSelectedColor(firstAvailableColor(slugOnly, colorOptions) ?? '')
+    if (
+      initialSize &&
+      product.sizes.includes(initialSize) &&
+      !isSizeSoldOut(slugOnly, initialSize)
+    ) {
       setSelectedSize(initialSize)
     } else if (product.sizes.length === 1) {
       setSelectedSize(product.sizes[0] ?? '')
     } else if (productIsOneSizeOnly({ slug: product.slug, sizes: product.sizes })) {
       setSelectedSize('One Size')
     } else {
-      setSelectedSize(product.sizes[0] ?? '')
+      setSelectedSize(firstAvailableSize(slugOnly, product.sizes) ?? '')
     }
   }, [isOpen, initialSize, product.id, product.slug, product.sizes, colorOptions])
 
@@ -179,6 +206,10 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
     }
     if (!selectedColor) {
       toast.error(ui.quickBuy.chooseColourError)
+      return false
+    }
+    if (variantSoldOut) {
+      toast.error(stockUi.soldOut)
       return false
     }
     return true
@@ -315,8 +346,8 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
                       locale: language,
                     })}
                     fill
+                    sizes="80px"
                     className="object-cover object-top"
-                    unoptimized={isWebshopPicturePath(previewImage)}
                   />
                 </div>
                 <div className={`min-w-0 flex-1 pe-8 text-start`}>
@@ -358,22 +389,35 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
                     ) : null}
                   </label>
                   <div className={`flex flex-wrap gap-2 `}>
-                    {product.sizes.map((size) => (
+                    {product.sizes.map((size) => {
+                      const sizeSoldOut = isSizeSoldOut(stockProduct, size)
+                      return (
                       <button
                         key={size}
                         type="button"
+                        disabled={sizeSoldOut}
                         onClick={() => setSelectedSize(size)}
+                        title={sizeSoldOut ? `${size} · ${stockUi.soldOut}` : undefined}
+                        aria-label={sizeSoldOut ? `${size} · ${stockUi.soldOut}` : undefined}
                         className={`min-w-[48px] border px-3 py-2.5 font-montserrat text-xs font-medium uppercase tracking-[0.1em] transition-all ${
- selectedSize === size
+ sizeSoldOut
+ ? 'cursor-not-allowed border-[#3B0A12]/15 bg-white text-[#3B0A12]/35 line-through'
+ : selectedSize === size
  ? 'border-[#3B0A12] bg-[#3B0A12] text-white'
  : 'border-[#3B0A12]/30 bg-white text-[#3B0A12] hover:border-[#6a8090]'
  }`}
-                        data-cursor-hover
+                        data-cursor-hover={sizeSoldOut ? undefined : true}
                       >
                         {size}
                       </button>
-                    ))}
+                      )
+                    })}
                   </div>
+                  {variantLowStock ? (
+                    <p className="mt-2 font-montserrat text-[11px] font-medium tracking-wide text-[#3B0A12] text-start">
+                      {stockUi.lowStock}
+                    </p>
+                  ) : null}
                 </div>
               )}
 
@@ -383,27 +427,38 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
                     {ui.quickBuy.color}
                     {selectedColor ? (
                       <span className={secondaryLabelClass}>
-                        ({localizedColorName(selectedColor, language)})
+                        ({localizedColorName(selectedColor, language)}
+                        {isColorSoldOut(stockProduct, selectedColor) ? ` · ${stockUi.soldOut}` : ''})
                       </span>
                     ) : null}
                   </label>
                   <div className={`flex flex-wrap items-center gap-0.5 `}>
-                    {colorOptions.map((color) => (
+                    {colorOptions.map((color) => {
+                      const colourSoldOut = isColorSoldOut(stockProduct, color.name)
+                      const colourLabel = localizedColorName(color.name, language)
+                      return (
                       <button
                         key={color.name}
                         type="button"
                         onClick={() => setSelectedColor(color.name)}
-                        className={PDP_COLOUR_SWATCH_HIT}
-                        title={localizedColorName(color.name, language)}
+                        className={`${PDP_COLOUR_SWATCH_HIT} relative`}
+                        title={colourSoldOut ? `${colourLabel} · ${stockUi.soldOut}` : colourLabel}
                         data-cursor-hover
                       >
                         <span
-                          className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)}`}
+                          className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)} ${colourSoldOut ? 'opacity-45' : ''}`}
                           style={pdpColourSwatchBeadStyle(color.hex)}
                           aria-hidden
                         />
+                        {colourSoldOut ? (
+                          <span
+                            className="pointer-events-none absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-[#3B0A12]/70"
+                            aria-hidden
+                          />
+                        ) : null}
                       </button>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )}
@@ -425,6 +480,16 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
               className="shrink-0 space-y-2 border-t border-[#3B0A12]/12 bg-[#f3eee8] px-4 py-3.5 sm:px-5"
               style={{ backgroundColor: '#f3eee8' }}
             >
+              {variantSoldOut ? (
+              <button
+                type="button"
+                disabled
+                className="inline-flex min-h-[48px] w-full cursor-not-allowed items-center justify-center gap-2 rounded border border-[#3B0A12] bg-[#3B0A12] px-3 py-2.5 font-montserrat text-[11px] font-medium uppercase tracking-[0.12em] text-white opacity-50 sm:text-xs"
+              >
+                <span className="truncate">{stockUi.soldOut}</span>
+              </button>
+              ) : (
+              <>
               <button
                 type="button"
                 onClick={handleAddToCart}
@@ -471,6 +536,8 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
                     : []
                 }
               />
+              </>
+              )}
             </div>
           </motion.div>
         </>

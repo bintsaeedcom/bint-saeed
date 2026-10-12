@@ -22,7 +22,7 @@ import { trackEvent } from '@/lib/analytics/tracking'
 import { persistCheckoutSnapshot } from '@/lib/analytics/checkoutSnapshot'
 import { metaCatalogIdForCartLine } from '@/lib/analytics/metaCatalogIds'
 import { getCartLineImageAlt } from '@/lib/products/imageAlt'
-import { isWebshopPicturePath, productImageSrc } from '@/lib/products/shopImage'
+import { productImageSrc } from '@/lib/products/shopImage'
 import { fetchGeoData } from '@/lib/geo/geoDetection'
 import {
   getAvailableCheckoutRails,
@@ -878,7 +878,6 @@ function CheckoutPageContent() {
                           src={imageSrc}
                           alt={getCartLineImageAlt(item, catalogProduct, language)}
                           fill
-                          unoptimized={isWebshopPicturePath(imageSrc)}
                           className="object-cover object-top"
                           sizes="48px"
                         />
@@ -948,7 +947,6 @@ function CheckoutPageContent() {
                         src={imageSrc}
                         alt={getCartLineImageAlt(item, catalogProduct, language)}
                         fill
-                        unoptimized={isWebshopPicturePath(imageSrc)}
                         className="img-zoom object-cover object-top"
                         sizes="(max-width: 640px) 64px, 80px"
                       />

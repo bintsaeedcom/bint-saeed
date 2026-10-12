@@ -378,9 +378,13 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
+    // Separate enter/exit points so iOS momentum and rubber-banding near the
+    // threshold can't toggle the header size back and forth mid-scroll.
+    const compactAt = isHomePage ? 32 : 50
+    const expandBelow = compactAt - 24
     const handleScroll = () => {
-      const threshold = isHomePage ? 32 : 50
-      setIsScrolled(window.scrollY > threshold)
+      const y = window.scrollY
+      setIsScrolled((current) => (current ? y > expandBelow : y > compactAt))
     }
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -415,8 +419,12 @@ export default function Header() {
     const el = headerRef.current
     if (!el) return
 
+    let written = ''
     const syncHeaderHeight = () => {
-      document.documentElement.style.setProperty('--site-header-height', `${el.offsetHeight}px`)
+      const next = `${el.offsetHeight}px`
+      if (next === written) return
+      written = next
+      document.documentElement.style.setProperty('--site-header-height', next)
     }
 
     syncHeaderHeight()
@@ -471,7 +479,7 @@ export default function Header() {
         className={`fixed inset-x-0 top-0 z-[60] w-full min-w-0 max-w-none border-b border-transparent transition-[background-color,backdrop-filter,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
  isTransparentHomeHeader
  ? 'bg-[linear-gradient(90deg,rgba(18,8,11,0.72)_0%,rgba(28,15,21,0.66)_22%,rgba(45,20,30,0.58)_50%,rgba(28,15,21,0.66)_78%,rgba(18,8,11,0.72)_100%)] shadow-[0_18px_46px_rgba(8,2,8,0.24)] backdrop-blur-md'
- : `${headerBarGradient} ${isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)] backdrop-blur-md' : 'backdrop-blur-[2px]'}`
+ : `${headerBarGradient} ${isScrolled ? 'shadow-[0_18px_40px_rgba(8,2,8,0.45)]' : ''}`
  }`}
       >
         <HouseOfferBanner />

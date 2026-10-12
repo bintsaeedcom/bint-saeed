@@ -61,6 +61,16 @@ import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { getStripeShipToCopy } from '@/lib/shipping/stripeShipToCopy'
 import { formatGarmentEstimatedShipWindow } from '@/lib/shipping/formatGarmentEstimatedShipWindow'
 import { resolveProductSku } from '@/lib/products/sku'
+import {
+  areAllColorsSoldOut,
+  firstAvailableColor,
+  firstAvailableSize,
+  isColorSoldOut,
+  isSizeSoldOut,
+  isVariantLowStock,
+  isVariantSoldOut,
+} from '@/lib/products/garmentStock'
+import { garmentStockUi } from '@/lib/i18n/garmentStockUi'
 import { buildMetaApparelCatalogId } from '@/lib/analytics/metaCatalogIds'
 import {
   PDP_ACCORDION_SUBTITLE,
@@ -182,6 +192,7 @@ export default function ProductPage() {
   const { isRTL, language, t } = useLanguage()
   const ui = productPageUi(language)
   const bagUi = commerceUi(language)
+  const stockUi = garmentStockUi(language)
   const galleryAria = getPdpGalleryAriaCopy(language)
   const { formatPrice, formatAmount, convertPrice, currency } = useCurrency()
 
@@ -278,7 +289,11 @@ export default function ProductPage() {
       return
     }
     if (!sizeOptions.length) return
-    setSelectedSize((current) => (current && sizeOptions.includes(current) ? current : sizeOptions[0] ?? ''))
+    setSelectedSize((current) =>
+      current && sizeOptions.includes(current) && !isSizeSoldOut(product, current)
+        ? current
+        : firstAvailableSize(product, sizeOptions) ?? '',
+    )
   }, [sizeOptions, product.id, product.slug, product.sizes])
 
   useEffect(() => {
@@ -295,7 +310,9 @@ export default function ProductPage() {
     }
 
     setSelectedColor((current) =>
-      current && availableColors.includes(current) ? current : (availableColors[0] ?? ''),
+      current && availableColors.includes(current)
+        ? current
+        : (firstAvailableColor(product, colorOptions) ?? ''),
     )
   }, [colorOptions, product.id])
 
@@ -344,6 +361,14 @@ export default function ProductPage() {
   useEffect(() => {
     setOpenDropdown(null)
   }, [product?.id, selectedColor])
+
+  const productSoldOut = areAllColorsSoldOut(product, colorOptions)
+  const selectedVariantSoldOut =
+    productSoldOut || isVariantSoldOut(product, { color: selectedColor, size: selectedSize })
+  const selectedVariantLowStock = isVariantLowStock(product, {
+    color: selectedColor,
+    size: selectedSize,
+  })
 
   const displayUnitPrice = convertPrice(product.price, product.id)
   const selectedMetaCatalogId =
@@ -395,6 +420,11 @@ export default function ProductPage() {
     if (!selectedColor) {
       pdpAnalytics.trackAtcError('primary', 'colour_required')
       toast.error(t.product.selectColor)
+      return
+    }
+    if (selectedVariantSoldOut) {
+      pdpAnalytics.trackAtcError('primary', 'sold_out')
+      toast.error(stockUi.soldOut)
       return
     }
 
@@ -731,6 +761,7 @@ export default function ProductPage() {
                             src={image}
                             alt={activeImageAlt(image, index)}
                             title={activeImageTitle(image)}
+                            sizes="96px"
                             className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                           />
                         )}
@@ -870,6 +901,7 @@ export default function ProductPage() {
                               src={image}
                               alt={activeImageAlt(image, index)}
                               title={activeImageTitle(image)}
+                              sizes="96px"
                               className="img-zoom object-cover object-top transition-opacity group-hover:opacity-80"
                             />
                           )}
@@ -918,28 +950,39 @@ export default function ProductPage() {
                 {selectedColor && (
                   <span className="font-montserrat text-[11px] text-brand-darkRed/65 tracking-wide">
                     {selectedColor ? localizedColorName(selectedColor, language) : null}
+                    {isColorSoldOut(product, selectedColor) ? ` · ${stockUi.soldOut}` : null}
                   </span>
                 )}
               </div>
               <div className={`flex flex-wrap items-center gap-0.5 `}>
-                {colorOptions.map((color) => (
+                {colorOptions.map((color) => {
+                  const colourSoldOut = isColorSoldOut(product, color.name)
+                  const colourLabel = localizedColorName(color.name, language)
+                  return (
                   <button
                     key={color.name}
                     type="button"
                     onClick={() => handleColorSelect(color.name)}
-                    className={PDP_COLOUR_SWATCH_HIT}
-                    title={localizedColorName(color.name, language)}
+                    className={`${PDP_COLOUR_SWATCH_HIT} relative`}
+                    title={colourSoldOut ? `${colourLabel} · ${stockUi.soldOut}` : colourLabel}
                     aria-pressed={selectedColor === color.name}
-                    aria-label={`${t.product.color} ${localizedColorName(color.name, language)}`}
+                    aria-label={`${t.product.color} ${colourLabel}${colourSoldOut ? ` · ${stockUi.soldOut}` : ''}`}
                     data-cursor-hover
                   >
                     <span
-                      className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)}`}
+                      className={`${PDP_COLOUR_SWATCH} ${pdpColourSwatchState(selectedColor === color.name)} ${colourSoldOut ? 'opacity-45' : ''}`}
                       style={pdpColourSwatchBeadStyle(color.hex)}
                       aria-hidden
                     />
+                    {colourSoldOut ? (
+                      <span
+                        className="pointer-events-none absolute left-1/2 top-1/2 h-px w-6 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-brand-darkRed/70"
+                        aria-hidden
+                      />
+                    ) : null}
                   </button>
-                ))}
+                  )
+                })}
               </div>
             </div>
             )}
@@ -970,31 +1013,48 @@ export default function ProductPage() {
                 </button>
               </div>
               <div className={`flex flex-wrap gap-2 `}>
-                {sizeOptions.map((size) => (
+                {sizeOptions.map((size) => {
+                  const sizeSoldOut = isSizeSoldOut(product, size)
+                  return (
                   <button
                     key={size}
                     type="button"
+                    disabled={sizeSoldOut}
                     onClick={() => {
                       setSelectedSize(size)
                       pdpAnalytics.trackSizeSelected(size)
                     }}
+                    title={sizeSoldOut ? `${size} · ${stockUi.soldOut}` : undefined}
+                    aria-label={sizeSoldOut ? `${size} · ${stockUi.soldOut}` : undefined}
                     className={`min-w-[52px] px-3 py-2.5 font-montserrat text-[11px] uppercase tracking-[0.08em] border transition-all ${CTA_BUTTON_RADIUS} ${
- selectedSize === size
+ sizeSoldOut
+ ? 'cursor-not-allowed border-brand-darkRed/20 bg-white text-brand-darkRed/35 line-through'
+ : selectedSize === size
  ? PDP_FILLED_PLUM
  : `${PDP_OUTLINED_PLUM} hover:bg-brand-darkRed/5`
  }`}
-                    data-cursor-hover
+                    data-cursor-hover={sizeSoldOut ? undefined : true}
                   >
                     {size}
                   </button>
-                ))}
+                  )
+                })}
               </div>
-              <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
-                {ui.madeToOrderShips(estimatedShipWindow)}
-              </p>
-              <PdpFasterDeliveryContact />
+              {selectedVariantLowStock ? (
+                <p className="mt-2 font-montserrat text-[11px] font-medium tracking-wide text-brand-darkRed">
+                  {stockUi.lowStock}
+                </p>
+              ) : null}
+              {!selectedVariantSoldOut ? (
+                <>
+                  <p className="mt-2 font-montserrat text-[11px] italic tracking-wide text-brand-darkRed/80">
+                    {ui.madeToOrderShips(estimatedShipWindow)}
+                  </p>
+                  <PdpFasterDeliveryContact />
+                </>
+              ) : null}
             </div>
-            ) : (
+            ) : !selectedVariantSoldOut ? (
               <div
                 id="size-selection"
                 className="mb-3 border-b border-brand-stone/20 pb-3"
@@ -1004,11 +1064,12 @@ export default function ProductPage() {
                 </p>
               <PdpFasterDeliveryContact />
             </div>
-            )}
+            ) : null}
 
             {/* Quantity & Add to Cart */}
             <div className="mb-1 flex flex-col gap-2 sm:flex-row sm:gap-3">
               {/* Quantity */}
+              {!selectedVariantSoldOut ? (
               <div className={`flex w-full items-center justify-center border border-brand-stone/50 sm:w-auto sm:justify-start ${CTA_BUTTON_RADIUS}`}>
                 <button
                   type="button"
@@ -1028,19 +1089,25 @@ export default function ProductPage() {
                   <FiPlus className="w-4 h-4" />
                 </button>
               </div>
+              ) : null}
 
               {/* Add to Cart */}
               <button
                 type="button"
                 onClick={handleAddToCart}
+                disabled={selectedVariantSoldOut}
+                aria-disabled={selectedVariantSoldOut}
                 data-pdp-primary-atc
-                className={`w-full px-6 py-3 sm:flex-1 ${PDP_PRIMARY_CTA}`}
-                data-cursor-hover
+                className={`w-full px-6 py-3 sm:flex-1 ${PDP_PRIMARY_CTA} ${
+                  selectedVariantSoldOut ? 'cursor-not-allowed opacity-50 hover:bg-brand-darkRed' : ''
+                }`}
+                data-cursor-hover={selectedVariantSoldOut ? undefined : true}
               >
-                {ui.addToBag}
+                {selectedVariantSoldOut ? stockUi.soldOut : ui.addToBag}
               </button>
 
             </div>
+            {!selectedVariantSoldOut ? (
             <ExpressWalletButtons
               className="mb-3 mt-1"
               ready={Boolean(selectedSize && selectedColor)}
@@ -1075,7 +1142,8 @@ export default function ProductPage() {
                   : []
               }
             />
-            {(currency.code === 'AED' || currency.code === 'SAR') ? (
+            ) : null}
+            {!productSoldOut && (currency.code === 'AED' || currency.code === 'SAR') ? (
               <TamaraProductWidget
                 amount={convertPrice(product.price, product.id)}
                 currency={currency.code}
@@ -1083,7 +1151,7 @@ export default function ProductPage() {
                 onPromoClick={() => pdpAnalytics.trackInstallmentClick('tamara')}
               />
             ) : null}
-            {['AED', 'SAR', 'KWD'].includes(currency.code) ? (
+            {!productSoldOut && ['AED', 'SAR', 'KWD'].includes(currency.code) ? (
               <TabbyPromoSnippet
                 price={convertPrice(product.price, product.id)}
                 currency={currency.code}
@@ -1187,6 +1255,7 @@ export default function ProductPage() {
                         <PdpGalleryImage
                           src={pairedImage}
                           alt={getProductImageAlt(item, pairedImage, { color: pairedColor, index: 0, locale: language })}
+                          sizes="(max-width: 768px) 50vw, 25vw"
                           className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                       </div>
@@ -1241,6 +1310,8 @@ export default function ProductPage() {
         selectedSize={selectedSize}
         selectedColor={selectedColor}
         quantity={quantity}
+        soldOut={selectedVariantSoldOut}
+        soldOutLabel={stockUi.soldOut}
         onAtcAttempt={() => pdpAnalytics.trackAtcAttempt('sticky')}
         onAtcSuccess={(qty) => pdpAnalytics.trackAtcSuccess('sticky', qty)}
         onAtcError={(code) => pdpAnalytics.trackAtcError('sticky', code)}

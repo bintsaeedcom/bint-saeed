@@ -187,7 +187,6 @@ function CollectionCardVisual({
             alt={withBrandAlt(`Bint Saeed ${label}`, language)}
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
-            unoptimized={isWebshopPicture(src)}
             loading="eager"
             className={`pointer-events-none object-cover object-center ${
  index === activeIndex ? 'opacity-100' : 'opacity-0'

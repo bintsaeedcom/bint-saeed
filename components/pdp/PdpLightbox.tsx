@@ -304,6 +304,7 @@ export default function PdpLightbox({
                         title={image.title}
                         priority={i === safeIndex}
                         fill={false}
+                        original
                         className="max-h-full max-w-full object-contain"
                       />
                     </div>
