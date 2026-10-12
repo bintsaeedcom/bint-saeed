@@ -67,7 +67,7 @@ function buildMobileNavColumns(
   const sectionNorm = sectionLabel.trim().toLowerCase()
   const sectionPath = sectionHref.split('?')[0]
 
-  return columns
+  const mobileColumns = columns
     .map((col) => {
       const links = col.links.filter((link) => {
         const linkPath = link.href.split('?')[0]
@@ -103,6 +103,14 @@ function buildMobileNavColumns(
       }
     })
     .filter((col): col is { title: string | null; links: MegaNavLink[] } => col != null)
+
+  // Product categories lead; gift cards follow.
+  const isGiftCardsOnly = (col: { links: MegaNavLink[] }) =>
+    col.links.every((link) => link.href.split('?')[0] === '/gift-cards')
+  return [
+    ...mobileColumns.filter((col) => !isGiftCardsOnly(col)),
+    ...mobileColumns.filter(isGiftCardsOnly),
+  ]
 }
 
 function CartCountBadge({ count }: { count: number; rtl?: boolean }) {

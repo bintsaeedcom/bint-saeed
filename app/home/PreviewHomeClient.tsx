@@ -385,9 +385,9 @@ export default function Home() {
     <div className={`relative min-h-0 overflow-x-clip `}>
       <HeroSection />
       <QuickShopCarousel />
-      <CharmHeroFeatureSection />
-      <MagazineGrid />
       <CharmHeroFeatureSectionMirror />
+      <MagazineGrid />
+      <CharmHeroFeatureSection />
       <EditorialIntro />
       <EditorialSplit />
       <CampaignPanoramaSection />
