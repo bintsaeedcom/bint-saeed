@@ -27,6 +27,7 @@ import {
 } from '@/lib/seo/rootLayoutJsonLd'
 import { buildFaqPageJsonLd } from '@/lib/seo/faqPageJsonLd'
 import { buildSupplementalJsonLdGraphScriptJson } from '@/lib/seo/seo'
+import { STORE_PRICE_RANGE } from '@/lib/seo/catalogPriceRange'
 import { stripLocaleFromPathname } from '@/lib/i18n/routing'
 import {
   buildGtmHeadBootstrapScript,
@@ -211,7 +212,7 @@ export default async function RootLayout({
                   addressCountry: 'AE',
                 },
                 sameAs: ['https://www.instagram.com/bintsaeed'],
-                priceRange: 'AED 2000 - AED 3500',
+                priceRange: `AED ${STORE_PRICE_RANGE.low} - AED ${STORE_PRICE_RANGE.high}`,
                 currenciesAccepted: 'AED',
                 paymentAccepted: 'Credit Card, Apple Pay, Google Pay',
                 openingHoursSpecification: {

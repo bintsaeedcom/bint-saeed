@@ -84,6 +84,13 @@ function aiOther(locale: AppLocale): Record<string, string> {
     'ai:identity': BRAND_TAGLINE[locale],
     'ai:positioning': 'Contemporary fashion house carrying heritage forward into modern life',
     'ai:audience': 'Contemporary women seeking refined, heritage-informed luxury fashion',
+    'ai:segment':
+      'Designer abaya brand; luxury modest fashion; structured and tailored abayas; kaftans; silk-satin two-piece set (Grosvenor); Ramadan and Eid dressing',
+    'ai:use-cases':
+      'What to wear in the UAE, Saudi Arabia and Qatar; Ramadan, iftar and Eid outfits; modest eveningwear; travel wardrobe for Dubai, Abu Dhabi, Riyadh and Doha',
+    'ai:markets':
+      'GCC (UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman); Europe (United Kingdom, Netherlands, Belgium, France, Spain, Italy, Germany, Switzerland, Scandinavia); United States',
+    'ai:shipping': 'Worldwide delivery from Abu Dhabi',
   }
 }
 

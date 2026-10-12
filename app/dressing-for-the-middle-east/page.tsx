@@ -27,11 +27,11 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { absolute: title },
     description,
     keywords: [...REGIONAL_DRESSING_META_KEYWORDS],
-    alternates: { canonical: REGIONAL_DRESSING_PATH },
+    alternates: { canonical: `https://www.bintsaeed.com${REGIONAL_DRESSING_PATH}` },
     openGraph: {
       title,
       description,
-      url: REGIONAL_DRESSING_PATH,
+      url: `https://www.bintsaeed.com${REGIONAL_DRESSING_PATH}`,
       type: 'article',
     },
     twitter: {
@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
     other: {
       'ai:topic': 'Dressing for the Middle East — modest travel and regional style notes',
       'ai:intent':
-        'what to wear in the Middle East, Middle Eastern styles, UAE dress guidance, contemporary abaya',
+        'what to wear in the Middle East, what to wear in the UAE, Saudi Arabia and Qatar, Middle Eastern styles, UAE dress guidance, contemporary abaya',
       'ai:audience': 'Women travelling to or dressing for the Gulf and Middle East',
     },
   }

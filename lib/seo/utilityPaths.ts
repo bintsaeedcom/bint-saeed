@@ -18,13 +18,11 @@ const UTILITY_EXACT = new Set([
   '/login',
   '/dashboard',
   '/coming-soon',
-  '/heritage',
 ])
 
 const UTILITY_PREFIXES = [
   '/checkout/',
   '/account/',
-  '/heritage/',
   '/admin',
   '/home/gate',
   '/home/blocked',
@@ -66,8 +64,6 @@ export const ROBOTS_UTILITY_DISALLOWS: string[] = [
   '/*/reset-password',
   '/verify-email',
   '/*/verify-email',
-  '/heritage',
-  '/*/heritage',
   '/coming-soon',
   '/*/coming-soon',
   '/dev/',

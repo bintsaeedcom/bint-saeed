@@ -1262,22 +1262,25 @@ function HeroSection() {
       {/* Background — mobile/tablet vs desktop art direction */}
       <motion.div
         style={reduceMotion ? undefined : { scale }}
-        className="pointer-events-none absolute inset-x-0 bottom-0 top-[var(--site-header-height,0px)] overflow-hidden transition-[top] duration-300 ease-out will-change-transform"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-[var(--site-header-height,0px)] overflow-hidden transition-[top] duration-300 ease-out"
       >
         {/* Face sits near the top of the frame — image starts below the header so it is never covered. */}
+        {/* Landscape art on portrait screens: object-cover renders ~178% of viewport height wide, so request that width. */}
         <Image
           src={HOME_MEDIA.heroMobile}
           alt={withBrandAlt(copy.mediaAlts.heroMobile, language)}
           fill
-          className="object-cover object-top scale-[1.02] saturate-[0.92] contrast-[1.03] brightness-[0.96] lg:hidden"
-          sizes="(max-width: 1023px) 100vw, 1px"
+          quality={90}
+          className="object-cover object-top saturate-[0.92] contrast-[1.03] brightness-[0.96] lg:hidden"
+          sizes="(max-width: 1023px) and (orientation: portrait) 178vh, (max-width: 1023px) 100vw, 1px"
           priority
         />
         <Image
           src={HOME_MEDIA.heroDesktop}
           alt={withBrandAlt(copy.mediaAlts.heroDesktop, language)}
           fill
-          className="hidden object-cover object-top scale-[1.02] saturate-[0.88] contrast-[1.04] brightness-[0.97] lg:block"
+          quality={90}
+          className="hidden object-cover object-top saturate-[0.88] contrast-[1.04] brightness-[0.97] lg:block"
           sizes="100vw"
           priority
         />

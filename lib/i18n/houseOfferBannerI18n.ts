@@ -12,7 +12,7 @@ export type HouseOfferBannerCopy = {
 }
 
 const EN: HouseOfferBannerCopy = {
-  firstPurchase: 'Enjoy 15% off your first purchase',
+  firstPurchase: 'A welcome gift on your first order',
   housePrivilege: 'Personal House Privilege after your first order',
   worldwideShipping: 'Worldwide shipping',
   shippingUae: 'Free UAE shipping above {amount}',
@@ -21,7 +21,7 @@ const EN: HouseOfferBannerCopy = {
 }
 
 const AR: HouseOfferBannerCopy = {
-  firstPurchase: 'خصم 15% على أول شراء',
+  firstPurchase: 'هدية ترحيبية مع طلبك الأول',
   housePrivilege: 'امتياز الدار الشخصي بعد أول طلب',
   worldwideShipping: 'شحن عالمي',
   shippingUae: 'شحن مجاني داخل الإمارات فوق {amount}',
@@ -30,7 +30,7 @@ const AR: HouseOfferBannerCopy = {
 }
 
 const FR: HouseOfferBannerCopy = {
-  firstPurchase: '−15 % sur votre premier achat',
+  firstPurchase: 'Un cadeau de bienvenue avec votre première commande',
   housePrivilege: 'Privilège personnel de la Maison après votre première commande',
   worldwideShipping: 'Livraison mondiale',
   shippingUae: 'Livraison offerte aux EAU au-dessus de {amount}',
@@ -39,7 +39,7 @@ const FR: HouseOfferBannerCopy = {
 }
 
 const IT: HouseOfferBannerCopy = {
-  firstPurchase: '−15% sul primo acquisto',
+  firstPurchase: 'Un regalo di benvenuto con il primo ordine',
   housePrivilege: 'Privilegio personale della Maison dopo il primo ordine',
   worldwideShipping: 'Spedizione mondiale',
   shippingUae: 'Spedizione gratuita negli EAU oltre {amount}',
@@ -48,7 +48,7 @@ const IT: HouseOfferBannerCopy = {
 }
 
 const DE: HouseOfferBannerCopy = {
-  firstPurchase: '15 % auf Ihren ersten Einkauf',
+  firstPurchase: 'Ein Willkommensgeschenk zu Ihrer ersten Bestellung',
   housePrivilege: 'Persönliches Hausprivileg nach Ihrer ersten Bestellung',
   worldwideShipping: 'Weltweiter Versand',
   shippingUae: 'Kostenloser UAE-Versand ab {amount}',
@@ -57,7 +57,7 @@ const DE: HouseOfferBannerCopy = {
 }
 
 const NL: HouseOfferBannerCopy = {
-  firstPurchase: '15% op uw eerste aankoop',
+  firstPurchase: 'Een welkomstgeschenk bij uw eerste bestelling',
   housePrivilege: 'Persoonlijk House Privilege na uw eerste bestelling',
   worldwideShipping: 'Wereldwijde verzending',
   shippingUae: 'Gratis VAE-verzending vanaf {amount}',
@@ -66,7 +66,7 @@ const NL: HouseOfferBannerCopy = {
 }
 
 const PT: HouseOfferBannerCopy = {
-  firstPurchase: '15% na primeira compra',
+  firstPurchase: 'Um presente de boas-vindas na primeira encomenda',
   housePrivilege: 'Privilégio pessoal da Casa após a primeira encomenda',
   worldwideShipping: 'Envio mundial',
   shippingUae: 'Envio gratuito nos EAU acima de {amount}',
@@ -75,7 +75,7 @@ const PT: HouseOfferBannerCopy = {
 }
 
 const ES: HouseOfferBannerCopy = {
-  firstPurchase: '15% en la primera compra',
+  firstPurchase: 'Un regalo de bienvenida con su primer pedido',
   housePrivilege: 'Privilegio personal de la Casa tras el primer pedido',
   worldwideShipping: 'Envío mundial',
   shippingUae: 'Envío gratuito en EAU a partir de {amount}',
@@ -84,7 +84,7 @@ const ES: HouseOfferBannerCopy = {
 }
 
 const RU: HouseOfferBannerCopy = {
-  firstPurchase: 'Скидка 15% на первую покупку',
+  firstPurchase: 'Приветственный подарок к первому заказу',
   housePrivilege: 'Личная привилегия Дома после первого заказа',
   worldwideShipping: 'Доставка по всему миру',
   shippingUae: 'Бесплатная доставка по ОАЭ от {amount}',
@@ -93,7 +93,7 @@ const RU: HouseOfferBannerCopy = {
 }
 
 const ZH: HouseOfferBannerCopy = {
-  firstPurchase: '首单享 15% 优惠',
+  firstPurchase: '首单即享迎新礼遇',
   housePrivilege: '首单后解锁个人 House Privilege',
   worldwideShipping: '全球配送',
   shippingUae: '阿联酋满 {amount} 免运费',
@@ -102,7 +102,7 @@ const ZH: HouseOfferBannerCopy = {
 }
 
 const ID: HouseOfferBannerCopy = {
-  firstPurchase: 'Diskon 15% untuk pembelian pertama',
+  firstPurchase: 'Hadiah selamat datang untuk pesanan pertama',
   housePrivilege: 'House Privilege pribadi setelah pesanan pertama',
   worldwideShipping: 'Pengiriman dunia',
   shippingUae: 'Gratis ongkir UEA di atas {amount}',
@@ -111,7 +111,7 @@ const ID: HouseOfferBannerCopy = {
 }
 
 const MS: HouseOfferBannerCopy = {
-  firstPurchase: 'Diskaun 15% untuk pembelian pertama',
+  firstPurchase: 'Hadiah alu-aluan untuk pesanan pertama',
   housePrivilege: 'House Privilege peribadi selepas pesanan pertama',
   worldwideShipping: 'Penghantaran sedunia',
   shippingUae: 'Penghantaran percuma UAE melebihi {amount}',

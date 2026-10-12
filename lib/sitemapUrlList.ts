@@ -2,6 +2,7 @@ import { isPrelaunch } from '@/lib/seo'
 import { buildCatalogSitemapEntries } from '@/lib/sitemap/catalogUrls'
 import { SITEMAP_PREFIX_LOCALES } from '@/lib/sitemap/locales'
 import { localizedPath, type LocalePrefix } from '@/lib/i18n/routing'
+import { RAMADAN_LOCALES, RAMADAN_PATH } from '@/lib/content/ramadanEdit'
 
 /** Canonical origin for sitemap `<loc>` values (align with `NEXT_PUBLIC_SITE_URL` in production). */
 export const SITEMAP_BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bintsaeed.com').replace(/\/$/, '')
@@ -45,7 +46,6 @@ const PRIMARY_HUBS: { path: string; changefreq: string; priority: string }[] = [
   { path: '/about', changefreq: 'monthly', priority: '0.7' },
   { path: '/the-codes', changefreq: 'monthly', priority: '0.7' },
   { path: '/craftsmanship', changefreq: 'monthly', priority: '0.7' },
-  { path: '/dressing-for-the-middle-east', changefreq: 'monthly', priority: '0.6' },
   { path: '/heritage', changefreq: 'monthly', priority: '0.7' },
   { path: '/heritage/al-talli', changefreq: 'monthly', priority: '0.7' },
   { path: '/heritage/khous', changefreq: 'monthly', priority: '0.65' },
@@ -61,6 +61,8 @@ const PRIMARY_HUBS: { path: string; changefreq: string; priority: string }[] = [
 
 /** Legal / thin hubs — English only in the sitemap (still available in all locales on-site). */
 const EN_ONLY_HUBS: { path: string; changefreq: string; priority: string }[] = [
+  // English-only editorial; prefixed URLs canonicalise to EN.
+  { path: '/dressing-for-the-middle-east', changefreq: 'monthly', priority: '0.6' },
   { path: '/shipment-return-policy', changefreq: 'monthly', priority: '0.5' },
   { path: '/careers', changefreq: 'monthly', priority: '0.5' },
   { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
@@ -98,7 +100,10 @@ export function getSitemapUrlEntries(): SitemapUrlEntry[] {
     return prelaunchUrls
   }
   const catalogUrls = buildCatalogSitemapEntries(SITEMAP_BASE_URL)
-  return [...buildEnglishSiteUrls(), ...buildLocalizedHubUrls(), ...catalogUrls]
+  const ramadanUrls = RAMADAN_LOCALES.map((locale) =>
+    entry(localizedPath(locale, RAMADAN_PATH), 'weekly', '0.8'),
+  )
+  return [...buildEnglishSiteUrls(), ...buildLocalizedHubUrls(), ...ramadanUrls, ...catalogUrls]
 }
 
 /** Absolute URLs only — for IndexNow and similar tooling. */

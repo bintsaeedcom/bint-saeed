@@ -8,6 +8,7 @@ import { OFFICIAL_EMAILS } from '@/lib/brand/officialEmails'
 import { ORGANIZATION_SAME_AS } from '@/lib/seo/pressCoverage'
 import { getHeaderNavCopy } from '@/lib/i18n/headerNavI18n'
 import { BRAND_NAME_ZH_DISPLAY, BRAND_NAME_ZH } from '@/lib/brand/chinaPresence'
+import { GARMENT_OFFER_COUNT, GARMENT_PRICE_RANGE } from '@/lib/seo/catalogPriceRange'
 
 /** Canonical site origin (must match live host / Search Console property). */
 const BASE = 'https://www.bintsaeed.com'
@@ -60,29 +61,29 @@ const ITEM_LIST_NAME: Record<AppLocale, string> = {
 
 const ITEM_LIST_DESC: Record<AppLocale, string> = {
   en:
-    'Luxury abayas UAE. Designer abayas Abu Dhabi. Silk abayas, lace abayas, heritage Al Talli embroidery. Bint Saeed luxury modest fashion collection.',
+    'Luxury abayas UAE. Designer abayas Abu Dhabi. Structured abayas, kaftans, silk-satin sets, heritage Al Talli embroidery. Bint Saeed, a designer abaya brand for luxury modest fashion.',
   ar:
-    'عبايات فاخرة في الإمارات. عبايات مصممة في أبوظبي. عبايات حرير ودانتيل وتطريز التلي التراثي. مجموعة بِنت سعيد للأزياء المحتشمة الفاخرة.',
+    'عبايات فاخرة في الإمارات. عبايات مصممة في أبوظبي. عبايات مهيكلة وقفاطين وأطقم ساتان حريري وتطريز التلي التراثي. مجموعة بِنت سعيد للأزياء المحتشمة الفاخرة.',
   fr:
-    'Abayas de luxe EAU. Abayas designer Abu Dhabi. Abayas soie et dentelle, broderie Al Talli. Collection mode modeste Bint Saeed.',
+    'Abayas de luxe EAU. Abayas designer Abu Dhabi. Abayas structurées, caftans, ensembles en satin de soie, broderie Al Talli. Collection mode modeste Bint Saeed.',
   it:
-    'Abaya di lusso EAU. Abaya designer Abu Dhabi. Seta, pizzo, ricamo Al Talli. Collezione modest fashion Bint Saeed.',
+    'Abaya di lusso EAU. Abaya designer Abu Dhabi. Abaya strutturate, caftani, completi in raso di seta, ricamo Al Talli. Collezione modest fashion Bint Saeed.',
   es:
-    'Abayas de lujo EAU. Abayas de diseño Abu Dhabi. Seda, encaje, bordado Al Talli. Colección de moda modesta Bint Saeed.',
+    'Abayas de lujo EAU. Abayas de diseño Abu Dhabi. Abayas estructuradas, caftanes, conjuntos de satén de seda, bordado Al Talli. Colección de moda modesta Bint Saeed.',
   ru:
-    'Роскошные абайи ОАЭ. Дизайнерские абайи Абу-Даби. Шёлк, кружево, вышивка Аль-Талли. Коллекция Bint Saeed.',
+    'Роскошные абайи ОАЭ. Дизайнерские абайи Абу-Даби. Структурированные абайи, кафтаны, комплекты из шёлкового атласа, вышивка Аль-Талли. Коллекция Bint Saeed.',
   zh:
-    '阿联酋奢华阿巴亚，阿布扎比设计师阿巴亚；丝绸、蕾丝与 Al Talli 刺绣。承悦（BINT SAEED）高端端庄服饰系列。',
+    '阿联酋奢华阿巴亚，阿布扎比设计师阿巴亚；廓形阿巴亚、长袍与真丝缎面套装，以及 Al Talli 刺绣。承悦（BINT SAEED）高端端庄服饰系列。',
   de:
-    'Luxus-Abayas VAE. Designer-Abayas Abu Dhabi. Seide, Spitze, Al-Talli-Stickerei. Bint Saeed bescheidene Luxusmode.',
+    'Luxus-Abayas VAE. Designer-Abayas Abu Dhabi. Strukturierte Abayas, Kaftane, Seidensatin-Sets, Al-Talli-Stickerei. Bint Saeed bescheidene Luxusmode.',
   nl:
-    'Luxe abaya’s VAE. Designer-abaya’s Abu Dhabi. Zijde, kant, Al Talli-borduur. Bint Saeed luxe modeste mode.',
+    'Luxe abaya’s VAE. Designer-abaya’s Abu Dhabi. Gestructureerde abaya’s, kaftans, zijdesatijnen sets, Al Talli-borduur. Bint Saeed luxe modeste mode.',
   pt:
-    'Abayas de luxo EAU. Abayas de designer Abu Dhabi. Seda, renda, bordado Al Talli. Coleção de moda modesta Bint Saeed.',
+    'Abayas de luxo EAU. Abayas de designer Abu Dhabi. Abayas estruturadas, caftãs, conjuntos de cetim de seda, bordado Al Talli. Coleção de moda modesta Bint Saeed.',
   id:
-    'Abaya mewah UEA. Abaya desainer Abu Dhabi. Sutra, renda, bordir Al Talli. Koleksi fashion modest Bint Saeed.',
+    'Abaya mewah UEA. Abaya desainer Abu Dhabi. Abaya terstruktur, kaftan, set satin sutra, bordir Al Talli. Koleksi fashion modest Bint Saeed.',
   ms:
-    'Abaya mewah UAE. Abaya pereka Abu Dhabi. Sutera, renda, sulaman Al Talli. Koleksi fesyen sopan Bint Saeed.',
+    'Abaya mewah UAE. Abaya pereka Abu Dhabi. Abaya berstruktur, kaftan, set satin sutera, sulaman Al Talli. Koleksi fesyen sopan Bint Saeed.',
 }
 
 const ITEM_LIST_ENTRIES: Record<AppLocale, { pos: number; name: string }[]> = {
@@ -90,84 +91,84 @@ const ITEM_LIST_ENTRIES: Record<AppLocale, { pos: number; name: string }[]> = {
     { pos: 1, name: 'Luxury Abayas UAE' },
     { pos: 2, name: 'Designer Abayas Abu Dhabi' },
     { pos: 3, name: 'Luxury Abayas Dubai' },
-    { pos: 4, name: 'Silk Abayas' },
+    { pos: 4, name: 'Structured Abayas' },
     { pos: 5, name: 'Black Abaya Dubai' },
   ],
   ar: [
     { pos: 1, name: 'عبايات فاخرة الإمارات' },
     { pos: 2, name: 'عبايات مصممة أبوظبي' },
     { pos: 3, name: 'عبايات فاخرة دبي' },
-    { pos: 4, name: 'عبايات حرير' },
+    { pos: 4, name: 'عبايات مهيكلة' },
     { pos: 5, name: 'عباءة سوداء دبي' },
   ],
   fr: [
     { pos: 1, name: 'Abayas de luxe EAU' },
     { pos: 2, name: 'Abayas designer Abu Dhabi' },
     { pos: 3, name: 'Abayas de luxe Dubaï' },
-    { pos: 4, name: 'Abayas en soie' },
+    { pos: 4, name: 'Abayas structurées' },
     { pos: 5, name: 'Abaya noire Dubaï' },
   ],
   it: [
     { pos: 1, name: 'Abaya di lusso EAU' },
     { pos: 2, name: 'Abaya designer Abu Dhabi' },
     { pos: 3, name: 'Abaya di lusso Dubai' },
-    { pos: 4, name: 'Abaya in seta' },
+    { pos: 4, name: 'Abaya strutturate' },
     { pos: 5, name: 'Abaya nera Dubai' },
   ],
   es: [
     { pos: 1, name: 'Abayas de lujo EAU' },
     { pos: 2, name: 'Abayas de diseño Abu Dhabi' },
     { pos: 3, name: 'Abayas de lujo Dubái' },
-    { pos: 4, name: 'Abayas de seda' },
+    { pos: 4, name: 'Abayas estructuradas' },
     { pos: 5, name: 'Abaya negra Dubái' },
   ],
   ru: [
     { pos: 1, name: 'Роскошные абайи ОАЭ' },
     { pos: 2, name: 'Дизайнерские абайи Абу-Даби' },
     { pos: 3, name: 'Роскошные абайи Дубай' },
-    { pos: 4, name: 'Шёлковые абайи' },
+    { pos: 4, name: 'Структурированные абайи' },
     { pos: 5, name: 'Чёрная абайя Дубай' },
   ],
   zh: [
     { pos: 1, name: '阿联酋奢华阿巴亚' },
     { pos: 2, name: '阿布扎比设计师阿巴亚' },
     { pos: 3, name: '迪拜奢华阿巴亚' },
-    { pos: 4, name: '丝绸阿巴亚' },
+    { pos: 4, name: '廓形阿巴亚' },
     { pos: 5, name: '迪拜黑色阿巴亚' },
   ],
   de: [
     { pos: 1, name: 'Luxus-Abayas VAE' },
     { pos: 2, name: 'Designer-Abayas Abu Dhabi' },
     { pos: 3, name: 'Luxus-Abayas Dubai' },
-    { pos: 4, name: 'Seiden-Abayas' },
+    { pos: 4, name: 'Strukturierte Abayas' },
     { pos: 5, name: 'Schwarze Abaya Dubai' },
   ],
   nl: [
     { pos: 1, name: 'Luxe abaya’s VAE' },
     { pos: 2, name: 'Designer-abaya’s Abu Dhabi' },
     { pos: 3, name: 'Luxe abaya’s Dubai' },
-    { pos: 4, name: 'Zijden abaya’s' },
+    { pos: 4, name: 'Gestructureerde abaya’s' },
     { pos: 5, name: 'Zwarte abaya Dubai' },
   ],
   pt: [
     { pos: 1, name: 'Abayas de luxo EAU' },
     { pos: 2, name: 'Abayas de designer Abu Dhabi' },
     { pos: 3, name: 'Abayas de luxo Dubai' },
-    { pos: 4, name: 'Abayas de seda' },
+    { pos: 4, name: 'Abayas estruturadas' },
     { pos: 5, name: 'Abaya preta Dubai' },
   ],
   id: [
     { pos: 1, name: 'Abaya mewah UEA' },
     { pos: 2, name: 'Abaya desainer Abu Dhabi' },
     { pos: 3, name: 'Abaya mewah Dubai' },
-    { pos: 4, name: 'Abaya sutra' },
+    { pos: 4, name: 'Abaya terstruktur' },
     { pos: 5, name: 'Abaya hitam Dubai' },
   ],
   ms: [
     { pos: 1, name: 'Abaya mewah UAE' },
     { pos: 2, name: 'Abaya pereka Abu Dhabi' },
     { pos: 3, name: 'Abaya mewah Dubai' },
-    { pos: 4, name: 'Abaya sutra' },
+    { pos: 4, name: 'Abaya berstruktur' },
     { pos: 5, name: 'Abaya hitam Dubai' },
   ],
 }
@@ -508,8 +509,8 @@ function offerCatalog(locale: AppLocale) {
     '@type': 'AggregateOffer',
     url: shopUrl,
     priceCurrency: 'AED',
-    lowPrice: '800',
-    highPrice: '5000',
+    lowPrice: String(GARMENT_PRICE_RANGE.low),
+    highPrice: String(GARMENT_PRICE_RANGE.high),
     availability: 'https://schema.org/InStock',
   }
   return {
@@ -632,7 +633,9 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'modern abaya UAE',
     'dubai abaya',
     'abaya brand',
-    'silk abaya',
+    'designer abaya brand',
+    'luxury modest fashion',
+    'structured abaya',
   ],
   ar: [
     'بنت سعيد',
@@ -642,7 +645,8 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'عباية أبوظبي',
     'عباية دبي',
     'أزياء محتشمة فاخرة',
-    'عباية حرير',
+    'عباية مصممة',
+    'عباية مهيكلة',
     'عبايات سوداء دبي',
     'علامة عبايات',
     'عبايات فاخرة أبوظبي',
@@ -655,7 +659,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Abaya Abu Dhabi',
     'Abaya Dubaï',
     'Mode modeste de luxe',
-    'Abaya soie',
+    'Abaya structurée',
     'Abayas élégantes EAU',
   ],
   it: [
@@ -666,7 +670,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Abaya Abu Dhabi',
     'Abaya Dubai',
     'Moda modesta di lusso',
-    'Abaya seta',
+    'Abaya strutturata',
   ],
   es: [
     'Bint Saeed',
@@ -676,7 +680,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Abaya Abu Dhabi',
     'Abaya Dubái',
     'Moda modesta de lujo',
-    'Abaya seda',
+    'Abaya estructurada',
   ],
   ru: [
     'Bint Saeed',
@@ -686,7 +690,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Абайя Абу-Даби',
     'Абайя Дубай',
     'Люкс скромная мода',
-    'Шёлковая абайя',
+    'Структурированная абайя',
   ],
   zh: [
     'Bint Saeed',
@@ -696,7 +700,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     '阿布扎比阿巴亚',
     '迪拜阿巴亚',
     '高端端庄时尚',
-    '丝绸阿巴亚',
+    '廓形阿巴亚',
   ],
   de: [
     'Bint Saeed',
@@ -706,7 +710,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Abaya Abu Dhabi',
     'Abaya Dubai',
     'Bescheidene Luxusmode',
-    'Seiden-Abaya',
+    'Strukturierte Abaya',
   ],
   nl: [
     'Bint Saeed',
@@ -716,7 +720,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Abaya Abu Dhabi',
     'Abaya Dubai',
     'Luxe bescheiden mode',
-    'Zijden abaya',
+    'Gestructureerde abaya',
   ],
   pt: [
     'Bint Saeed',
@@ -726,7 +730,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Abaya Abu Dhabi',
     'Abaya Dubai',
     'Moda modesta de luxo',
-    'Abaya seda',
+    'Abaya estruturada',
   ],
   id: [
     'Bint Saeed',
@@ -736,7 +740,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Abaya Abu Dhabi',
     'Abaya Dubai',
     'Fashion modest mewah',
-    'Abaya sutra',
+    'Abaya terstruktur',
   ],
   ms: [
     'Bint Saeed',
@@ -746,7 +750,7 @@ const LOCAL_BUSINESS_ALTERNATE: Record<AppLocale, string[]> = {
     'Abaya Abu Dhabi',
     'Abaya Dubai',
     'Fesyen modest mewah',
-    'Abaya sutra',
+    'Abaya berstruktur',
   ],
 }
 
@@ -850,9 +854,9 @@ export function buildProductJsonLd(locale: AppLocale) {
     offers: {
       '@type': 'AggregateOffer',
       priceCurrency: 'AED',
-      lowPrice: '800',
-      highPrice: '5000',
-      offerCount: 50,
+      lowPrice: String(GARMENT_PRICE_RANGE.low),
+      highPrice: String(GARMENT_PRICE_RANGE.high),
+      offerCount: GARMENT_OFFER_COUNT,
       availability: 'https://schema.org/InStock',
     },
   }

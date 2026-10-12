@@ -28,10 +28,17 @@ import { trackEvent } from '@/lib/analytics/tracking'
 const HOUSE_MONOGRAM_SRC = '/brand/house-monogram-burgundy.webp'
 const EMAIL_POPUP_DELAY_MS = 150_000
 const SESSION_STARTED_AT_KEY = 'bint-saeed-session-started-at'
+const POPUP_SEEN_KEY = 'bint-saeed-popup-seen'
+const SUBSCRIBED_KEY = 'bint-saeed-subscribed'
+/** Set when the modal is closed without subscribing — the corner tab stays until its own × is pressed. */
+const TEASER_KEY = 'bint-saeed-welcome-gift-teaser'
 
 export default function EmailPopup() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const [showTeaser, setShowTeaser] = useState(false)
+  const [commerceChromeUp, setCommerceChromeUp] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [discountCode, setDiscountCode] = useState(HOUSE_FIRST_PURCHASE_CODE)
@@ -45,6 +52,38 @@ export default function EmailPopup() {
     if (!isOpen) return
     return lockBodyScroll()
   }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, showSuccess])
+
+  useEffect(() => {
+    const sync = () => {
+      setCommerceChromeUp(document.documentElement.dataset.commerceBottomChrome === '1')
+      setMobileNavOpen(document.documentElement.dataset.mobileNavOpen === '1')
+    }
+    sync()
+    const observer = new MutationObserver(sync)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-commerce-bottom-chrome', 'data-mobile-nav-open'],
+    })
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (localStorage.getItem(SUBSCRIBED_KEY) || localStorage.getItem(POPUP_SEEN_KEY)) {
+      setShowTeaser(false)
+      return
+    }
+    setShowTeaser(localStorage.getItem(TEASER_KEY) === 'true')
+  }, [pathname])
 
   useEffect(() => {
     const forcePreview =
@@ -72,10 +111,11 @@ export default function EmailPopup() {
       inner.startsWith('/shop/')
     if (!onInviteSurface) return
 
-    const hasSeenPopup = localStorage.getItem('bint-saeed-popup-seen')
-    const hasSubscribed = localStorage.getItem('bint-saeed-subscribed')
+    const hasSeenPopup = localStorage.getItem(POPUP_SEEN_KEY)
+    const hasSubscribed = localStorage.getItem(SUBSCRIBED_KEY)
+    const teaserParked = localStorage.getItem(TEASER_KEY) === 'true'
 
-    if (!hasSeenPopup && !hasSubscribed) {
+    if (!hasSeenPopup && !hasSubscribed && !teaserParked) {
       let timer: number | undefined
       let regionalSettled = hasRegionalExperienceChoice()
 
@@ -154,7 +194,9 @@ export default function EmailPopup() {
             : HOUSE_FIRST_PURCHASE_CODE
         setDiscountCode(code)
         setShowSuccess(true)
-        localStorage.setItem('bint-saeed-subscribed', 'true')
+        setShowTeaser(false)
+        localStorage.removeItem(TEASER_KEY)
+        localStorage.setItem(SUBSCRIBED_KEY, 'true')
         localStorage.setItem('bint-saeed-discount-code', code)
         trackEvent('subscribe', { method: 'house_community_popup' })
       } else {
@@ -175,8 +217,31 @@ export default function EmailPopup() {
 
   const handleClose = () => {
     setIsOpen(false)
-    localStorage.setItem('bint-saeed-popup-seen', 'true')
+    if (showSuccess || localStorage.getItem(SUBSCRIBED_KEY)) {
+      localStorage.setItem(POPUP_SEEN_KEY, 'true')
+      localStorage.removeItem(TEASER_KEY)
+      setShowTeaser(false)
+      return
+    }
+    localStorage.setItem(TEASER_KEY, 'true')
+    setShowTeaser(true)
   }
+
+  const reopenFromTeaser = () => {
+    setShowTeaser(false)
+    setIsOpen(true)
+    trackEvent('welcome_gift_teaser_open', {})
+  }
+
+  const dismissTeaser = () => {
+    setShowTeaser(false)
+    localStorage.removeItem(TEASER_KEY)
+    localStorage.setItem(POPUP_SEEN_KEY, 'true')
+  }
+
+  const innerPath = pathname ? stripLocaleFromPathname(pathname).pathname : '/'
+  const teaserSuppressed =
+    innerPath.startsWith('/checkout') || innerPath === '/cart' || commerceChromeUp || mobileNavOpen
 
   const copyCode = () => {
     navigator.clipboard.writeText(discountCode)
@@ -213,9 +278,7 @@ export default function EmailPopup() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: 8 }}
               transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-              className={`pointer-events-auto relative flex h-auto max-h-full min-h-0 w-full max-w-lg flex-col ${glassOverlayPanel} md:max-w-4xl ${
-                isRTL ? 'md:flex-row-reverse' : 'md:flex-row'
-              }`}
+              className={`pointer-events-auto relative flex h-auto max-h-full min-h-0 w-full max-w-lg flex-col ${glassOverlayPanel}`}
               data-scroll-lock-owner="true"
               data-cursor-hover
               role="dialog"
@@ -224,13 +287,13 @@ export default function EmailPopup() {
             >
             <div className={glassOverlayWash} aria-hidden />
 
-            {/* Mobile double frame — invitation-card edge */}
+            {/* Double frame — invitation-card edge */}
             <div
-              className="pointer-events-none absolute inset-2 z-[1] border border-white/20 md:hidden"
+              className="pointer-events-none absolute inset-2 z-[1] border border-white/20"
               aria-hidden
             />
             <div
-              className="pointer-events-none absolute inset-[11px] z-[1] border border-brand-dustyBlue/30 md:hidden"
+              className="pointer-events-none absolute inset-[11px] z-[1] border border-brand-dustyBlue/30"
               aria-hidden
             />
 
@@ -239,58 +302,35 @@ export default function EmailPopup() {
               onClick={handleClose}
               className="absolute end-2.5 top-2.5 z-20 border border-white/25 bg-black/35 p-2 text-[#e8d8c8]/90 backdrop-blur-md transition-colors hover:border-brand-dustyBlue/50 hover:text-white sm:end-3 sm:top-3"
               data-cursor-hover
-              aria-label="Close"
+              aria-label={copy.closeAria}
             >
               <FiX className="h-5 w-5" />
             </button>
 
-            {/* Desktop only — full square monogram (never cropped) */}
-            <div className="relative z-[2] hidden aspect-square w-[min(50%,28rem)] shrink-0 self-center md:block">
-              <Image
-                src={HOUSE_MONOGRAM_SRC}
-                alt={copy.imageAlt}
-                fill
-                priority
-                sizes="448px"
-                className="object-contain object-center"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/25" />
-              <div className="absolute bottom-8 left-8 right-10">
-                <p className="font-rozha text-3xl leading-tight text-[#faf8f5] drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]">
-                  {copy.exclusiveOffer}
-                </p>
-              </div>
-            </div>
-
-            <div className="relative z-[2] flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-6 pe-12 pt-11 text-start sm:p-7 sm:pe-14 sm:pt-12 md:justify-center md:p-9 md:pe-14 md:pt-10">
+            <div className="relative z-[2] flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-7 pb-8 pt-12 sm:px-10 sm:pb-10 sm:pt-14">
 
               {!showSuccess ? (
-                <div className="relative">
-                  {/* Mobile seal — small monogram, not a cropped banner */}
-                  <div className="mb-5 flex flex-col items-center md:hidden">
-                    <div className="relative mb-3 h-14 w-14 overflow-hidden">
+                <div className="relative text-center">
+                  <div className="mb-6 flex justify-center">
+                    <div className="relative h-16 w-16 overflow-hidden sm:h-[4.5rem] sm:w-[4.5rem]">
                       <Image
                         src={HOUSE_MONOGRAM_SRC}
                         alt=""
                         fill
-                        sizes="56px"
+                        priority
+                        sizes="72px"
                         className="object-contain object-center"
                         aria-hidden
                       />
                     </div>
-                    <p className="font-rozha text-base leading-snug text-[#faf8f5]/95">
-                      {copy.exclusiveOffer}
-                    </p>
-                    <div className="mt-3 h-px w-10 bg-brand-dustyBlue/55" aria-hidden />
                   </div>
 
-                  <p className="mb-1.5 font-montserrat text-[10px] uppercase tracking-[0.28em] text-brand-dustyBlue sm:mb-2">
-                    {copy.eyebrow}
-                  </p>
-                  <h2 className={`mb-2 font-rozha text-xl sm:mb-3 sm:text-2xl md:text-3xl ${glassTextTitleOnDark}`}>
+                  <h2
+                    className={`mb-3 text-center font-montserrat text-lg uppercase tracking-[0.28em] sm:text-xl ${glassTextTitleOnDark}`}
+                  >
                     {copy.headline}
                   </h2>
-                  <p className={`mb-4 font-montserrat text-[13px] leading-relaxed tracking-wide sm:mb-6 sm:text-sm ${glassTextBodyOnDark}`}>
+                  <p className={`mb-7 text-center font-montserrat text-[14px] leading-relaxed tracking-wide sm:text-[15px] ${glassTextBodyOnDark}`}>
                     {copy.body}
                   </p>
 
@@ -355,16 +395,16 @@ export default function EmailPopup() {
                     </button>
                   </form>
 
-                  <p className={`mt-3 font-montserrat text-[11px] leading-relaxed sm:mt-4 ${glassTextMutedOnDark}`}>
+                  <p className={`mt-4 text-center font-montserrat text-[11px] leading-relaxed ${glassTextMutedOnDark}`}>
                     {copy.privacyLine}
                   </p>
                 </div>
               ) : (
                 <div className="relative text-center">
-                  <h2 className={`mb-2 font-rozha text-xl sm:mb-3 sm:text-2xl md:text-3xl ${glassTextTitleOnDark}`}>
+                  <h2 className={`mb-3 text-center font-montserrat text-lg uppercase tracking-[0.28em] sm:text-xl ${glassTextTitleOnDark}`}>
                     {copy.welcome}
                   </h2>
-                  <p className={`mb-4 font-montserrat text-[13px] tracking-wide sm:mb-6 sm:text-sm ${glassTextBodyOnDark}`}>
+                  <p className={`mb-5 text-center font-montserrat text-[13px] leading-relaxed tracking-wide sm:mb-6 sm:text-sm ${glassTextBodyOnDark}`}>
                     {copy.discountIntro}
                   </p>
 
@@ -378,8 +418,8 @@ export default function EmailPopup() {
                     </span>
                   </div>
 
-                  <p className={`mb-2 font-montserrat text-xs ${glassTextMutedOnDark}`}>{copy.copyHint}</p>
-                  <p className={`mb-5 font-montserrat text-xs leading-relaxed sm:mb-6 ${glassTextMutedOnDark}`}>
+                  <p className={`mb-2 text-center font-montserrat text-xs ${glassTextMutedOnDark}`}>{copy.copyHint}</p>
+                  <p className={`mb-5 text-center font-montserrat text-xs leading-relaxed sm:mb-6 ${glassTextMutedOnDark}`}>
                     {copy.privilegeNote}
                   </p>
 
@@ -397,6 +437,47 @@ export default function EmailPopup() {
             </motion.div>
           </motion.div>
         </>
+      )}
+      {showTeaser && !isOpen && !teaserSuppressed && (
+        <motion.div
+          key="welcome-gift-teaser"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className={`fixed z-[79] ${isRTL ? 'left-[4.625rem] sm:left-[5.75rem]' : 'right-[4.625rem] sm:right-[5.75rem]'}`}
+          style={{
+            bottom:
+              'calc(var(--mobile-bottom-chrome, 0px) + max(1.15rem, env(safe-area-inset-bottom, 0px)) + 0.125rem)',
+          }}
+        >
+          <div className={`relative flex items-stretch ${glassOverlayPanel}`}>
+            <div className={glassOverlayWash} aria-hidden />
+            <button
+              type="button"
+              onClick={reopenFromTeaser}
+              className="relative z-[1] flex items-center gap-2.5 py-2.5 ps-3 pe-2 text-start transition-colors hover:bg-white/5"
+              aria-label={copy.teaserOpenAria}
+              data-cursor-hover
+            >
+              <span className="relative h-7 w-7 shrink-0 overflow-hidden">
+                <Image src={HOUSE_MONOGRAM_SRC} alt="" fill sizes="28px" className="object-contain" aria-hidden />
+              </span>
+              <span className="font-montserrat text-[10px] uppercase tracking-[0.22em] text-[#faf8f5]">
+                {copy.teaserLabel}
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={dismissTeaser}
+              className="relative z-[1] flex items-center border-s border-white/15 px-2.5 text-[#e8d8c8]/75 transition-colors hover:text-white"
+              aria-label={copy.teaserDismissAria}
+              data-cursor-hover
+            >
+              <FiX className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   )

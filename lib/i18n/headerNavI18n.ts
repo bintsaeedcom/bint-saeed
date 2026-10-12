@@ -39,6 +39,12 @@ export type HeaderNavCopy = {
   wishlist: string
   viewAll: string
   collection: string
+  newArrivals: string
+  clothing: string
+  leisurewear: string
+  tShirts: string
+  joggingSets: string
+  homeLifestyle: string
   searchSuggestions: string[]
 }
 
@@ -80,6 +86,12 @@ const EN: HeaderNavCopy = {
   wishlist: 'Favorites',
   viewAll: 'View all',
   collection: 'Collection',
+  newArrivals: 'New Arrivals',
+  clothing: 'Clothing',
+  leisurewear: 'Leisurewear',
+  tShirts: 'T-Shirts',
+  joggingSets: 'Jogging Sets',
+  homeLifestyle: 'Home & Lifestyle',
   searchSuggestions: ['Abayas', 'Kaftans', 'Dresses', 'Accessories', 'New Arrivals', 'Heritage'],
 }
 
@@ -121,6 +133,12 @@ const AR: HeaderNavCopy = {
   wishlist: 'المفضلة',
   viewAll: 'عرض الكل',
   collection: 'المجموعة',
+  newArrivals: 'وصل حديثاً',
+  clothing: 'الملابس',
+  leisurewear: 'الملابس المريحة',
+  tShirts: 'تيشيرتات',
+  joggingSets: 'أطقم رياضية',
+  homeLifestyle: 'المنزل ونمط الحياة',
   searchSuggestions: ['العبايات', 'القفاطين', 'الفساتين', 'الإكسسوارات', 'وصل حديثاً', 'التراث'],
 }
 
@@ -162,6 +180,12 @@ const FR: HeaderNavCopy = {
   wishlist: 'Favoris',
   viewAll: 'Tout voir',
   collection: 'Collection',
+  newArrivals: 'Nouveautés',
+  clothing: 'Vêtements',
+  leisurewear: 'Détente',
+  tShirts: 'T-shirts',
+  joggingSets: 'Ensembles jogging',
+  homeLifestyle: 'Maison & Art de vivre',
   searchSuggestions: ['Abayas', 'Caftans', 'Robes', 'Accessoires', 'Nouveautés', 'Héritage'],
 }
 
@@ -203,6 +227,12 @@ const IT: HeaderNavCopy = {
   wishlist: 'Preferiti',
   viewAll: 'Vedi tutto',
   collection: 'Collezione',
+  newArrivals: 'Nuovi arrivi',
+  clothing: 'Abbigliamento',
+  leisurewear: 'Tempo libero',
+  tShirts: 'T-shirt',
+  joggingSets: 'Tute',
+  homeLifestyle: 'Casa & Lifestyle',
   searchSuggestions: ['Abaya', 'Caftani', 'Abiti', 'Accessori', 'Novità', 'Heritage'],
 }
 
@@ -244,6 +274,12 @@ const DE: HeaderNavCopy = {
   wishlist: 'Favoriten',
   viewAll: 'Alles ansehen',
   collection: 'Kollektion',
+  newArrivals: 'Neuheiten',
+  clothing: 'Bekleidung',
+  leisurewear: 'Freizeit',
+  tShirts: 'T-Shirts',
+  joggingSets: 'Jogginganzüge',
+  homeLifestyle: 'Wohnen & Lifestyle',
   searchSuggestions: ['Abayas', 'Kaftane', 'Kleider', 'Accessoires', 'Neuheiten', 'Heritage'],
 }
 
@@ -285,6 +321,12 @@ const NL: HeaderNavCopy = {
   wishlist: 'Favorieten',
   viewAll: 'Alles bekijken',
   collection: 'Collectie',
+  newArrivals: 'Nieuw binnen',
+  clothing: 'Kleding',
+  leisurewear: 'Leisurewear',
+  tShirts: 'T-shirts',
+  joggingSets: 'Joggingsets',
+  homeLifestyle: 'Wonen & Lifestyle',
   searchSuggestions: ["Abaya's", 'Kaftans', 'Jurken', 'Accessoires', 'Nieuw binnen', 'Erfgoed'],
 }
 
@@ -326,6 +368,12 @@ const PT: HeaderNavCopy = {
   wishlist: 'Favoritos',
   viewAll: 'Ver tudo',
   collection: 'Coleção',
+  newArrivals: 'Novidades',
+  clothing: 'Vestuário',
+  leisurewear: 'Lazer',
+  tShirts: 'T-shirts',
+  joggingSets: 'Conjuntos de jogging',
+  homeLifestyle: 'Casa & Lifestyle',
   searchSuggestions: ['Abayas', 'Caftans', 'Vestidos', 'Acessórios', 'Novidades', 'Herança'],
 }
 
@@ -367,6 +415,12 @@ const ES: HeaderNavCopy = {
   wishlist: 'Favoritos',
   viewAll: 'Ver todo',
   collection: 'Colección',
+  newArrivals: 'Novedades',
+  clothing: 'Ropa',
+  leisurewear: 'Ocio',
+  tShirts: 'Camisetas',
+  joggingSets: 'Conjuntos de chándal',
+  homeLifestyle: 'Hogar & Lifestyle',
   searchSuggestions: ['Abayas', 'Caftanes', 'Vestidos', 'Accesorios', 'Novedades', 'Heritage'],
 }
 
@@ -408,6 +462,12 @@ const RU: HeaderNavCopy = {
   wishlist: 'Избранное',
   viewAll: 'Смотреть всё',
   collection: 'Коллекция',
+  newArrivals: 'Новинки',
+  clothing: 'Одежда',
+  leisurewear: 'Одежда для отдыха',
+  tShirts: 'Футболки',
+  joggingSets: 'Спортивные костюмы',
+  homeLifestyle: 'Дом и стиль жизни',
   searchSuggestions: ['Абайи', 'Кафтаны', 'Платья', 'Аксессуары', 'Новинки', 'Наследие'],
 }
 
@@ -449,6 +509,12 @@ const ZH: HeaderNavCopy = {
   wishlist: '收藏',
   viewAll: '查看全部',
   collection: '系列',
+  newArrivals: '新品',
+  clothing: '服装',
+  leisurewear: '休闲系列',
+  tShirts: 'T恤',
+  joggingSets: '运动套装',
+  homeLifestyle: '家居与生活方式',
   searchSuggestions: ['长袍', '开襟长袍', '连衣裙', '配饰', '新品', '传承'],
 }
 
@@ -490,6 +556,12 @@ const ID: HeaderNavCopy = {
   wishlist: 'Favorit',
   viewAll: 'Lihat semua',
   collection: 'Koleksi',
+  newArrivals: 'Koleksi Baru',
+  clothing: 'Pakaian',
+  leisurewear: 'Leisurewear',
+  tShirts: 'Kaos',
+  joggingSets: 'Setelan Jogging',
+  homeLifestyle: 'Rumah & Gaya Hidup',
   searchSuggestions: ['Abaya', 'Kaftan', 'Gaun', 'Aksesori', 'Baru tiba', 'Warisan'],
 }
 
@@ -531,6 +603,12 @@ const MS: HeaderNavCopy = {
   wishlist: 'Kegemaran',
   viewAll: 'Lihat semua',
   collection: 'Koleksi',
+  newArrivals: 'Koleksi Baharu',
+  clothing: 'Pakaian',
+  leisurewear: 'Pakaian Santai',
+  tShirts: 'Baju-T',
+  joggingSets: 'Set Jogging',
+  homeLifestyle: 'Rumah & Gaya Hidup',
   searchSuggestions: ['Abaya', 'Kaftan', 'Gaun', 'Aksesori', 'Baru tiba', 'Warisan'],
 }
 

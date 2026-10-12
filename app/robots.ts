@@ -15,6 +15,47 @@ const BRAND_IMAGE_DISALLOW = [
   '/twitter-image',
 ]
 
+/**
+ * AI search + answer engines. OAI-SearchBot powers ChatGPT search results;
+ * ChatGPT-User / Claude-User / Perplexity-User fetch pages when a user asks about the brand.
+ */
+const AI_CRAWLERS = [
+  'OAI-SearchBot',
+  'GPTBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'Claude-SearchBot',
+  'Claude-User',
+  'anthropic-ai',
+  'PerplexityBot',
+  'Perplexity-User',
+  'Google-Extended',
+  'Applebot-Extended',
+  'Amazonbot',
+  'meta-externalagent',
+  'MistralAI-User',
+  'cohere-ai',
+  'Diffbot',
+  'DeepSeekBot',
+  'Bytespider',
+]
+
+const SEARCH_ENGINES = [
+  'Googlebot',
+  'Bingbot',
+  'Applebot',
+  'DuckDuckBot',
+  'Baiduspider',
+  'Baiduspider-render',
+  'Yandex',
+  'YandexBot',
+  'YandexImages',
+  'YandexMobileBot',
+  'Mail.RU_Bot',
+  'NaverBot',
+  'Yeti',
+]
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
@@ -29,110 +70,14 @@ export default function robots(): MetadataRoute.Robots {
         disallow: BRAND_IMAGE_DISALLOW,
       },
       {
-        userAgent: 'GPTBot',
-        allow: '/',
-      },
-      {
-        userAgent: 'ChatGPT-User',
-        allow: '/',
-      },
-      {
-        userAgent: 'ClaudeBot',
-        allow: '/',
-      },
-      {
-        userAgent: 'anthropic-ai',
-        allow: '/',
-      },
-      {
-        userAgent: 'PerplexityBot',
-        allow: '/',
-      },
-      {
-        userAgent: 'Google-Extended',
-        allow: '/',
-      },
-      {
-        userAgent: 'Amazonbot',
-        allow: '/',
-      },
-      {
-        userAgent: 'Bytespider',
-        allow: '/',
-      },
-      {
-        userAgent: 'DeepSeekBot',
-        allow: '/',
-      },
-      {
-        userAgent: 'Baiduspider',
-        allow: '/',
-      },
-      {
-        userAgent: 'Baiduspider-render',
-        allow: '/',
-      },
-      {
-        userAgent: 'meta-externalagent',
-        allow: '/',
-      },
-      {
-        userAgent: 'cohere-ai',
-        allow: '/',
-      },
-      {
-        userAgent: 'Diffbot',
-        allow: '/',
-      },
-      {
-        userAgent: 'Applebot-Extended',
-        allow: '/',
-      },
-      {
-        userAgent: 'Googlebot',
+        userAgent: SEARCH_ENGINES,
         allow: '/',
         disallow: ROBOTS_UTILITY_DISALLOWS,
       },
       {
-        userAgent: 'Bingbot',
+        userAgent: AI_CRAWLERS,
         allow: '/',
         disallow: ROBOTS_UTILITY_DISALLOWS,
-      },
-      {
-        userAgent: 'Yandex',
-        allow: '/',
-      },
-      {
-        userAgent: 'YandexBot',
-        allow: '/',
-      },
-      {
-        userAgent: 'YandexImages',
-        allow: '/',
-      },
-      {
-        userAgent: 'YandexMobileBot',
-        allow: '/',
-      },
-      {
-        userAgent: 'Mail.RU_Bot',
-        allow: '/',
-      },
-      {
-        userAgent: 'DuckDuckBot',
-        allow: '/',
-      },
-      {
-        userAgent: 'Applebot',
-        allow: '/',
-      },
-      {
-        userAgent: 'NaverBot',
-        allow: '/',
-      },
-      {
-        userAgent: 'Yeti',
-        allow: '/',
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

@@ -52,8 +52,9 @@ const mobileNavLogoClass = 'h-[clamp(3.2rem,11.2vw,5.5rem)] w-auto max-h-[104px]
 /** Gold house emblem for mobile nav drawer (square mark, not wordmark). */
 const mobileNavEmblemClass = 'h-11 w-11 object-contain sm:h-12 sm:w-12'
 
-type MegaNavLink = { label: string; href: string }
-type MegaNavColumn = { title: string; links: MegaNavLink[] }
+/** No `href` = shown but not clickable (category announced before it launches). */
+type MegaNavLink = { label: string; href?: string }
+type MegaNavColumn = { title: string; links: MegaNavLink[]; disabled?: boolean }
 
 /**
  * Mobile accordion body — one “View all”, no repeated section titles / All X links.
@@ -63,13 +64,14 @@ function buildMobileNavColumns(
   columns: MegaNavColumn[],
   sectionHref: string,
   sectionLabel: string,
-): { title: string | null; links: MegaNavLink[] }[] {
+): { title: string | null; links: MegaNavLink[]; disabled?: boolean }[] {
   const sectionNorm = sectionLabel.trim().toLowerCase()
   const sectionPath = sectionHref.split('?')[0]
 
   const mobileColumns = columns
     .map((col) => {
       const links = col.links.filter((link) => {
+        if (!link.href) return true
         const linkPath = link.href.split('?')[0]
         const labelNorm = link.label.trim().toLowerCase()
         // Our Story shares /about with “View all” but stays in the list (desktop parity)
@@ -88,7 +90,7 @@ function buildMobileNavColumns(
         if (sectionPath === '/about' && linkPath === '/personalisation') return false
         return true
       })
-      if (links.length === 0) return null
+      if (links.length === 0 && !col.disabled) return null
 
       const titleNorm = col.title.trim().toLowerCase()
       const hideTitle =
@@ -100,13 +102,17 @@ function buildMobileNavColumns(
       return {
         title: hideTitle ? null : col.title,
         links,
+        disabled: col.disabled,
       }
     })
-    .filter((col): col is { title: string | null; links: MegaNavLink[] } => col != null)
+    .filter(
+      (col): col is { title: string | null; links: MegaNavLink[]; disabled: boolean | undefined } =>
+        col != null,
+    )
 
   // Product categories lead; gift cards follow.
   const isGiftCardsOnly = (col: { links: MegaNavLink[] }) =>
-    col.links.every((link) => link.href.split('?')[0] === '/gift-cards')
+    col.links.length > 0 && col.links.every((link) => link.href?.split('?')[0] === '/gift-cards')
   return [
     ...mobileColumns.filter((col) => !isGiftCardsOnly(col)),
     ...mobileColumns.filter(isGiftCardsOnly),
@@ -264,7 +270,7 @@ export default function Header() {
   const megaMenus: Record<
     string,
     {
-      columns: { title: string; links: { label: string; href: string }[] }[]
+      columns: MegaNavColumn[]
       features: { title: string; href: string; image: string; ctaLabel?: string }[]
     }
   > = useMemo(
@@ -272,20 +278,40 @@ export default function Header() {
     '/shop': {
       columns: [
         {
-          title: hn.discover,
-          links: [
-            { label: hn.shopAll, href: '/shop' },
-            { label: hn.giftCards, href: '/gift-cards' },
-          ],
+          title: hn.newArrivals,
+          links: [{ label: hn.shopAll, href: '/shop' }],
         },
         {
-          title: hn.readyToWear,
+          title: hn.clothing,
           links: [
             { label: hn.abayas, href: '/shop?category=abayas' },
             { label: hn.sets, href: '/shop?category=sets' },
             { label: hn.dresses, href: '/shop?category=dresses' },
             { label: hn.kaftans, href: '/shop?category=kaftans' },
+            { label: hn.viewAll, href: '/shop' },
           ],
+        },
+        {
+          title: hn.accessories,
+          links: [
+            { label: hn.signatureStrands, href: '/accessories?type=signature-strands' },
+            { label: hn.necklaces, href: '/accessories?type=necklaces' },
+            { label: hn.earrings, href: '/accessories?type=earrings' },
+            { label: hn.bagCharms, href: '/accessories?type=bag-strands' },
+            { label: hn.phoneCharms, href: '/accessories?type=phone-strands' },
+            { label: hn.giftCards, href: '/gift-cards' },
+            { label: hn.viewAll, href: '/accessories' },
+          ],
+        },
+        {
+          title: hn.leisurewear,
+          disabled: true,
+          links: [{ label: hn.tShirts }, { label: hn.joggingSets }],
+        },
+        {
+          title: hn.homeLifestyle,
+          disabled: true,
+          links: [],
         },
       ],
       features: [
@@ -728,36 +754,61 @@ export default function Header() {
                 <div className={`border-t border-white/10 bg-[#f6f3ef] shadow-[0_22px_48px_rgba(20,8,11,0.18)] text-start`}>
                   <div className="grid grid-cols-12 gap-6 px-6 py-8 lg:gap-10 lg:px-12">
                     <div
-                      className={
-                        megaMenus[activeMegaMenu].features.length > 0
-                          ? 'col-span-5 grid grid-cols-1 content-start gap-3 self-start xl:col-span-6'
-                          : 'col-span-12'
-                      }
+                      className={`${
+                        megaMenus[activeMegaMenu].features.length === 0
+                          ? 'col-span-12'
+                          : megaMenus[activeMegaMenu].columns.length > 3
+                            ? 'col-span-7'
+                            : 'col-span-5 xl:col-span-6'
+                      } ${
+                        megaMenus[activeMegaMenu].columns.length > 1
+                          ? 'flex content-start gap-x-8 self-start xl:gap-x-10'
+                          : 'grid grid-cols-1 content-start gap-3 self-start'
+                      }`}
                     >
                       {megaMenus[activeMegaMenu].columns.map((col) => (
-                        <div key={col.title} className="min-w-0">
-                          <p className="mb-2 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.22em] text-brand-clayRed/70">
+                        <div key={col.title} className="min-w-0" aria-disabled={col.disabled || undefined}>
+                          <p
+                            className={`mb-2 whitespace-nowrap font-montserrat text-[10px] uppercase tracking-[0.22em] ${
+                              col.disabled ? 'text-brand-clayRed/35' : 'text-brand-clayRed/70'
+                            }`}
+                          >
                             {col.title}
                           </p>
                           <div className="space-y-2.5">
-                            {col.links.map((link) => (
-                              <LocaleLink
-                                key={link.label}
-                                href={link.href}
-                                className="block max-w-full whitespace-nowrap break-keep font-montserrat text-[13px] text-brand-darkRed/90 transition-colors [hyphens:none] hover:text-brand-dustyBlue"
-                                data-cursor-hover
-                                onClick={() => setActiveMegaMenu(null)}
-                              >
-                                {link.label}
-                              </LocaleLink>
-                            ))}
+                            {col.links.map((link) =>
+                              link.href ? (
+                                <LocaleLink
+                                  key={link.label}
+                                  href={link.href}
+                                  className="block max-w-full whitespace-nowrap break-keep font-montserrat text-[13px] text-brand-darkRed/90 transition-colors [hyphens:none] hover:text-brand-dustyBlue"
+                                  data-cursor-hover
+                                  onClick={() => setActiveMegaMenu(null)}
+                                >
+                                  {link.label}
+                                </LocaleLink>
+                              ) : (
+                                <span
+                                  key={link.label}
+                                  data-nav-link
+                                  className="block max-w-full cursor-default select-none whitespace-nowrap break-keep font-montserrat text-[13px] text-brand-darkRed/35 [hyphens:none]"
+                                  aria-disabled="true"
+                                >
+                                  {link.label}
+                                </span>
+                              ),
+                            )}
                           </div>
                         </div>
                       ))}
                     </div>
 
                     {megaMenus[activeMegaMenu].features.length > 0 && (
-                    <div className="col-span-7 grid grid-cols-2 gap-4 xl:col-span-6 xl:gap-5">
+                    <div
+                      className={`grid grid-cols-2 gap-4 xl:gap-5 ${
+                        megaMenus[activeMegaMenu].columns.length > 3 ? 'col-span-5' : 'col-span-7 xl:col-span-6'
+                      }`}
+                    >
                       {megaMenus[activeMegaMenu].features.slice(0, 2).map((feature) => (
                         <LocaleLink
                           key={feature.title}
@@ -1088,12 +1139,25 @@ export default function Header() {
                                       className={`min-w-0 ${colIndex > 0 ? 'mt-3' : ''}`}
                                     >
                                       {col.title ? (
-                                        <p className="mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/50">
+                                        <p
+                                          className={`mb-2 font-montserrat text-[10px] uppercase tracking-[0.22em] ${
+                                            col.disabled ? 'text-white/30' : 'text-white/50'
+                                          }`}
+                                        >
                                           {col.title}
                                         </p>
                                       ) : null}
                                       <div className="space-y-0.5">
-                                        {col.links.map((link) => (
+                                        {col.links.map((link) =>
+                                          !link.href ? (
+                                            <span
+                                              key={`${col.title ?? 'links'}-${link.label}`}
+                                              className="flex min-h-11 cursor-default select-none items-center py-2 font-montserrat text-[13px] leading-snug text-white/35"
+                                              aria-disabled="true"
+                                            >
+                                              {link.label}
+                                            </span>
+                                          ) : (
                                           <LocaleLink
                                             key={`${col.title ?? 'links'}-${link.label}`}
                                             href={link.href}
@@ -1108,7 +1172,8 @@ export default function Header() {
                                               aria-hidden
                                             />
                                           </LocaleLink>
-                                        ))}
+                                          ),
+                                        )}
                                       </div>
                                     </div>
                                   ))}
