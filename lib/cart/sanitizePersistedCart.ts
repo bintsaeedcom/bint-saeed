@@ -119,7 +119,8 @@ export function sanitizePersistedCartWithMeta(items: CartItem[]): SanitizePersis
     next.push({
       ...item,
       id: canonicalId,
-      name: catalog.name,
+      // Stored names are already localised for the shopper's language; the catalog is English.
+      name: item.name?.trim() ? item.name : catalog.name,
       price: catalog.price,
       image: item.image?.trim() ? item.image : catalog.image,
       ...(migratedUrl !== item.productUrl ? { productUrl: migratedUrl } : {}),

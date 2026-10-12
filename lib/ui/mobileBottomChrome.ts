@@ -3,6 +3,7 @@
  * so WhatsApp and page padding can clear them without overlap.
  */
 const heights = new Map<string, number>()
+let written: number | undefined
 
 /** Commerce CTAs that must never sit under WhatsApp. */
 const COMMERCE_CHROME_IDS = new Set(['cart-bar', 'sticky-atc', 'checkout-bar'])
@@ -17,9 +18,15 @@ function syncCssVar() {
   }
   // Cap so a bad measurement can never push fixed docks into mid-viewport.
   const capped = Math.min(max, Math.round(typeof window !== 'undefined' ? window.innerHeight * 0.4 : 320))
-  document.documentElement.style.setProperty('--mobile-bottom-chrome', `${capped}px`)
-  document.documentElement.dataset.mobileBottomChrome = capped > 0 ? '1' : '0'
-  document.documentElement.dataset.commerceBottomChrome = commerceActive ? '1' : '0'
+  const root = document.documentElement
+  if (capped !== written) {
+    written = capped
+    root.style.setProperty('--mobile-bottom-chrome', `${capped}px`)
+  }
+  const chromeFlag = capped > 0 ? '1' : '0'
+  if (root.dataset.mobileBottomChrome !== chromeFlag) root.dataset.mobileBottomChrome = chromeFlag
+  const commerceFlag = commerceActive ? '1' : '0'
+  if (root.dataset.commerceBottomChrome !== commerceFlag) root.dataset.commerceBottomChrome = commerceFlag
 }
 
 export function publishMobileBottomChrome(id: string, heightPx: number) {

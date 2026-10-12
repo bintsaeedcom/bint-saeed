@@ -447,7 +447,7 @@ export default function ShopClient() {
                     {categoryLabel(product.category)}
                   </p>
                   <div className="space-y-0.5">
-                    <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block max-w-full" data-cursor-hover>
+                    <LocaleLink href={getProductHref(product)} className="relative z-20 inline-block max-w-full !min-h-0" data-cursor-hover>
                       <h3
                         data-product-name="true"
                         data-product-name-size="grid"
@@ -552,10 +552,10 @@ export default function ShopClient() {
           contentClassName="max-w-[1400px]"
           ariaLabel={ui.cart.continueShopping}
         >
-          <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70">
+          <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70 max-md:hidden">
             {ui.shop.collectionEyebrow}
           </p>
-          <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
+          <h2 className="font-rozha md:mt-3 text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
             {ui.cart.continueShopping}
           </h2>
           <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-[#e8d8c8]/65">

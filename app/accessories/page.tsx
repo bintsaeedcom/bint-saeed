@@ -579,10 +579,10 @@ export default function AccessoriesPage() {
           overlay="photo"
           bgAlt={getAccessoriesDesertNightAlt(language as AppLocale)}
         >
-          <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70">
+          <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70 max-md:hidden">
             {ui.accessories.collectionEyebrow}
           </p>
-          <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
+          <h2 className="font-rozha md:mt-3 text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
             {ui.cart.continueShopping}
           </h2>
           <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-[#e8d8c8]/65">

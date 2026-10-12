@@ -20,7 +20,8 @@ const GARMENT_STOCK_BY_SLUG: Record<string, GarmentStockRule> = {
   'mayfair-kaftan': { soldOut: true },
   'nothing-hill-kaftan': { soldOut: true },
   'knightsbridge-abaya-jacket': { soldOutColors: ['Dark Brown'] },
-  'marylebone-abaya': { soldOutColors: ['Black'] },
+  'marylebone-abaya': { soldOut: true },
+  'kensington-abaya': { soldOut: true },
   'soho-set': { soldOutSizes: ['XL', 'XXL'], lowStockSizes: ['S', 'M'] },
 }
 

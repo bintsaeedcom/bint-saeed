@@ -27,8 +27,6 @@ import { showAddedToBagToast } from '@/lib/cart/addedToBagToast'
 import { clarityUnmaskPriceProps } from '@/lib/analytics/clarityUnmask'
 import { usePdpAnalytics } from '@/lib/analytics/usePdpAnalytics'
 import { withBrandAlt } from '@/lib/products/imageAlt'
-import TamaraProductWidget from '@/components/TamaraProductWidget'
-import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
 import {
   PDP_COLOUR_SWATCH,
   PDP_COLOUR_SWATCH_HIT,
@@ -1108,24 +1106,6 @@ export default function AccessoryDetailPage() {
 
             </div>
 
-            {!soldOut && (currency.code === 'AED' || currency.code === 'SAR') ? (
-              <TamaraProductWidget
-                amount={convertPrice(accessory.price, accessory.id) * quantity}
-                currency={currency.code}
-                className="mb-3 mt-1"
-                onPromoClick={() => pdpAnalytics.trackInstallmentClick('tamara')}
-              />
-            ) : null}
-            {!soldOut && ['AED', 'SAR', 'KWD'].includes(currency.code) ? (
-              <TabbyPromoSnippet
-                price={convertPrice(accessory.price, accessory.id) * quantity}
-                currency={currency.code}
-                source="product"
-                className="mb-3"
-                onPromoClick={() => pdpAnalytics.trackInstallmentClick('tabby')}
-              />
-            ) : null}
-
             <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 text-start`}>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />
@@ -1177,7 +1157,7 @@ export default function AccessoryDetailPage() {
                 <h3 className={PDP_RELATED_TITLE}>
                   {productUi.pairsWellWith}
                 </h3>
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-5">
                   {relatedAccessories.map((item) => {
                     const relatedName = getLocalizedAccessoryDisplayName(item, language)
                     const relatedImage = item.images[0] ?? ''
@@ -1199,7 +1179,7 @@ export default function AccessoryDetailPage() {
                             className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                           />
                         </div>
-                        <div className="mt-3 flex min-w-0 items-start justify-between gap-2 sm:gap-3">
+                        <div className="mt-3 flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
                           <p data-product-name="true" className="min-w-0 flex-1 font-montserrat text-[10px] uppercase leading-snug tracking-[0.12em] text-brand-darkRed sm:text-[11px] sm:tracking-[0.14em]">
                             <span className="line-clamp-2">{relatedName}</span>
                           </p>
@@ -1225,10 +1205,10 @@ export default function AccessoryDetailPage() {
         overlay="photo"
         bgAlt={getAccessoriesDesertNightAlt(language as AppLocale)}
       >
-        <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70">
+        <p className="font-montserrat text-[11px] font-medium uppercase tracking-[0.2em] text-[#e8d8c8]/70 max-md:hidden">
           {ui.accessories.collectionEyebrow}
         </p>
-        <h2 className="mt-3 font-rozha text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
+        <h2 className="font-rozha md:mt-3 text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.08] text-[#e8ddd4]">
           {ui.cart.continueShopping}
         </h2>
         <p className="mx-auto mt-3 max-w-lg font-montserrat text-sm leading-relaxed tracking-wide text-[#e8d8c8]/65">

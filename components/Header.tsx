@@ -147,6 +147,22 @@ function HeaderCartTrigger({
   )
 }
 
+let writtenHeaderHeight = ''
+
+/**
+ * Every write to this root custom property restyles the whole document, so it must
+ * never run per animation frame (the compaction transition would drop most frames
+ * on phones).
+ */
+function writeHeaderHeight(value: string) {
+  if (value === writtenHeaderHeight) return
+  writtenHeaderHeight = value
+  document.documentElement.style.setProperty('--site-header-height', value)
+}
+
+/** Header must stay settled this long before its measured height is published. */
+const HEADER_HEIGHT_SETTLE_MS = 120
+
 export default function Header() {
   const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -159,6 +175,8 @@ export default function Header() {
   const [searchResults, setSearchResults] = useState<SearchableItem[]>([])
   const searchInputRef = useRef<HTMLInputElement>(null)
   const headerRef = useRef<HTMLElement>(null)
+  const isScrolledRef = useRef(false)
+  const settledHeaderHeightsRef = useRef<{ full?: string; compact?: string }>({})
   const megaMenuLeaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const mobileNavScrollRef = useRef<HTMLDivElement>(null)
   const mobileSectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
@@ -412,31 +430,47 @@ export default function Header() {
     return () => window.removeEventListener(OPEN_MINI_CART_EVENT, openMiniCart as EventListener)
   }, [])
 
-  // Live header height for sticky chrome. Do not clear the CSS var on cleanup —
-  // that snaps layout back to rem fallbacks and causes CLS. ResizeObserver alone
-  // tracks scroll/breakpoint size changes; avoid rebinding on isScrolled.
+  // Header height for sticky chrome, published only once the header has settled.
+  // Do not clear the CSS var on cleanup — that snaps layout back to rem fallbacks
+  // and causes CLS.
   useEffect(() => {
     const el = headerRef.current
     if (!el) return
 
-    let written = ''
-    const syncHeaderHeight = () => {
+    let settleTimer: ReturnType<typeof setTimeout> | undefined
+    const settle = () => {
       const next = `${el.offsetHeight}px`
-      if (next === written) return
-      written = next
-      document.documentElement.style.setProperty('--site-header-height', next)
+      const key = isScrolledRef.current ? 'compact' : 'full'
+      const cached = settledHeaderHeightsRef.current
+      // Banner dismissal or a breakpoint change invalidates the other state's height too.
+      if (cached[key] !== undefined && cached[key] !== next) settledHeaderHeightsRef.current = {}
+      settledHeaderHeightsRef.current[key] = next
+      writeHeaderHeight(next)
+    }
+    const scheduleSettle = () => {
+      clearTimeout(settleTimer)
+      settleTimer = setTimeout(settle, HEADER_HEIGHT_SETTLE_MS)
     }
 
-    syncHeaderHeight()
-    const ro = new ResizeObserver(syncHeaderHeight)
+    settle()
+    const ro = new ResizeObserver(scheduleSettle)
     ro.observe(el)
-    window.addEventListener('resize', syncHeaderHeight)
+    window.addEventListener('resize', scheduleSettle)
 
     return () => {
+      clearTimeout(settleTimer)
       ro.disconnect()
-      window.removeEventListener('resize', syncHeaderHeight)
+      window.removeEventListener('resize', scheduleSettle)
     }
   }, [])
+
+  // Jump sticky chrome straight to the known target height when compaction toggles,
+  // so it never trails the header's transition.
+  useEffect(() => {
+    isScrolledRef.current = isScrolled
+    const target = settledHeaderHeightsRef.current[isScrolled ? 'compact' : 'full']
+    if (target) writeHeaderHeight(target)
+  }, [isScrolled])
 
   // Handle search
   useEffect(() => {

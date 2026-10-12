@@ -9,7 +9,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FiArrowRight, FiLock } from 'react-icons/fi'
 import toast from 'react-hot-toast'
-import { useCartStore, ensureCartHydrated } from '@/store/cartStore'
+import { useCartStore, ensureCartHydrated, useCartReady } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
@@ -118,6 +118,7 @@ function CheckoutPageContent() {
   const searchParams = useSearchParams()
   const { localize } = useLocaleHref()
   const { items, hasHydrated } = useCartStore()
+  const cartReady = useCartReady()
   const { formatAmount, currency, cartSubtotal, formatCartSubtotal, convertPrice } = useCurrency()
   const { isRTL, language } = useLanguage()
   const ui = commerceUi(language)
@@ -796,7 +797,7 @@ function CheckoutPageContent() {
     }
   }
 
-  if (!hasHydrated) {
+  if (!cartReady) {
     return (
       <div className={`flex min-h-screen items-center justify-center bg-brand-pageCanvas font-montserrat text-brand-clayRed ${SITE_CONTENT_TOP_PAD}`}>
         {form.loadingCheckout}

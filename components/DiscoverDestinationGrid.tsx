@@ -32,6 +32,10 @@ export default function DiscoverDestinationGrid({
   const copy = getCartEmptyDiscoverCopy(language)
   const destinations = filterOffCurrentPage(DISCOVER_DESTINATIONS, pathname)
   const onDark = tone === 'onDark'
+  /** Phones show one row of two tiles, without Strands. */
+  const mobileVisibleHrefs = new Set(
+    destinations.filter((dest) => !dest.strandsLock).slice(0, 2).map((dest) => dest.href),
+  )
 
   return (
     <div
@@ -48,7 +52,9 @@ export default function DiscoverDestinationGrid({
           <LocaleLink
             key={dest.href}
             href={dest.href}
-            className="group flex h-full flex-col items-center text-center"
+            className={`group flex h-full flex-col items-center text-center ${
+              mobileVisibleHrefs.has(dest.href) ? '' : 'max-md:hidden'
+            }`}
             data-cursor-hover
             data-analytics-event="click_discover_destination"
             data-analytics-section={`${source}_${dest.analytics}`}

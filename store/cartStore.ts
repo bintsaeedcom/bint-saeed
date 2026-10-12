@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { sanitizePersistedCartWithMeta } from '@/lib/cart/sanitizePersistedCart'
@@ -184,46 +185,63 @@ export const useCartStore = create<CartStore>()(
       partialize: (state) => ({ items: state.items }),
       onRehydrateStorage: () => (state, error) => {
         // Must never throw — zustand only marks hydration finished after this callback.
-        // A throw leaves hasHydrated=false forever while items may already be restored
-        // (bag badge shows 1, checkout stuck on "Loading checkout…").
-        try {
-          if (error) {
-            console.error('Cart rehydrate storage error', error)
-            useCartStore.setState({ hasHydrated: true })
-            return
-          }
-
-          if (!state) {
-            useCartStore.setState({ items: [], hasHydrated: true })
-            return
-          }
-
-          const { items, removedCount } = sanitizePersistedCartWithMeta(state.items)
-          useCartStore.setState({
-            items,
-            hasHydrated: true,
-          })
-
-          if (removedCount > 0 && typeof window !== 'undefined') {
-            queueMicrotask(() => {
-              void import('react-hot-toast').then(({ default: toast }) => {
-                toast(
-                  removedCount === 1
-                    ? 'One piece in your bag is no longer available and was removed.'
-                    : `${removedCount} pieces in your bag are no longer available and were removed.`,
-                  { id: 'cart-sanitize-removed', duration: 4200 },
-                )
-              })
-            })
-          }
-        } catch (rehydrateError) {
-          console.error('Cart rehydrate failed', rehydrateError)
-          useCartStore.setState({ hasHydrated: true })
-        }
+        // localStorage hydration runs synchronously inside `create()`, before
+        // `useCartStore` is assigned, so the store update has to be deferred.
+        queueMicrotask(() => finishCartRehydration(state, error))
       },
     }
   )
 )
+
+function finishCartRehydration(state: CartStore | undefined, error: unknown) {
+  try {
+    if (error) {
+      console.error('Cart rehydrate storage error', error)
+      useCartStore.setState({ hasHydrated: true })
+      return
+    }
+
+    if (!state) {
+      useCartStore.setState({ items: [], hasHydrated: true })
+      return
+    }
+
+    const { items, removedCount } = sanitizePersistedCartWithMeta(state.items)
+    useCartStore.setState({
+      items,
+      hasHydrated: true,
+    })
+
+    if (removedCount > 0 && typeof window !== 'undefined') {
+      // A toast rendered before React hydrates the page causes a hydration mismatch.
+      const showRemovedToast = () =>
+        void import('react-hot-toast').then(({ default: toast }) => {
+          toast(
+            removedCount === 1
+              ? 'One piece in your bag is no longer available and was removed.'
+              : `${removedCount} pieces in your bag are no longer available and were removed.`,
+            { id: 'cart-sanitize-removed', duration: 4200 },
+          )
+        })
+      if (document.readyState === 'complete') window.setTimeout(showRemovedToast, 0)
+      else window.addEventListener('load', () => window.setTimeout(showRemovedToast, 0), { once: true })
+    }
+  } catch (rehydrateError) {
+    console.error('Cart rehydrate failed', rehydrateError)
+    useCartStore.setState({ hasHydrated: true })
+  }
+}
+
+/**
+ * Render gate for bag-dependent pages. The bag can be restored before React hydrates,
+ * but the server HTML always shows the loading state, so wait for mount as well.
+ */
+export function useCartReady(): boolean {
+  const hasHydrated = useCartStore((state) => state.hasHydrated)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  return mounted && hasHydrated
+}
 
 /**
  * Sync our `hasHydrated` flag after zustand persist finishes.

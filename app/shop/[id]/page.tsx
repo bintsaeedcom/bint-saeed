@@ -13,8 +13,6 @@ import SizeGuideModal from '@/components/SizeGuideModal'
 import StickyAddToCart from '@/components/StickyAddToCart'
 import { PdpFasterDeliveryContact } from '@/components/pdp/PdpFasterDeliveryContact'
 import FavoriteHeartButton from '@/components/FavoriteHeartButton'
-import TamaraProductWidget from '@/components/TamaraProductWidget'
-import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
 import ExpressWalletButtons from '@/components/checkout/ExpressWalletButtons'
 import { commerceUi } from '@/lib/i18n/commerceUi'
 import {
@@ -1143,23 +1141,6 @@ export default function ProductPage() {
               }
             />
             ) : null}
-            {!productSoldOut && (currency.code === 'AED' || currency.code === 'SAR') ? (
-              <TamaraProductWidget
-                amount={convertPrice(product.price, product.id)}
-                currency={currency.code}
-                className="mb-3 mt-1"
-                onPromoClick={() => pdpAnalytics.trackInstallmentClick('tamara')}
-              />
-            ) : null}
-            {!productSoldOut && ['AED', 'SAR', 'KWD'].includes(currency.code) ? (
-              <TabbyPromoSnippet
-                price={convertPrice(product.price, product.id)}
-                currency={currency.code}
-                source="product"
-                className="mb-3"
-                onPromoClick={() => pdpAnalytics.trackInstallmentClick('tabby')}
-              />
-            ) : null}
             <div className={`mb-1 grid grid-cols-3 gap-2.5 border-y border-brand-stone/20 py-3 text-start`}>
               <div className="flex flex-col items-center gap-1 text-center">
                 <FiAward className="h-3.5 w-3.5 text-brand-darkRed/75" />
@@ -1225,7 +1206,7 @@ export default function ProductPage() {
                 <h3 className={PDP_RELATED_TITLE}>
                   {hasManualPairing ? ui.pairsWellWith : ui.youMayAlsoLike}
                 </h3>
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-5">
                   {relatedStyles.map((item) => {
                     const activeColor = selectedColor || product?.colors[0]?.name || ''
                     const pairedColor = isKnightsbridgePairingSlug(product.slug)
@@ -1251,15 +1232,15 @@ export default function ProductPage() {
                         pdpAnalytics.trackRelatedProductClick(item.id, item.name)
                       }
                     >
-                      <div className="relative z-20 aspect-[9/16] overflow-hidden bg-brand-stone/10">
+                      <div className="relative z-20 aspect-[4/5] overflow-hidden bg-brand-stone/10">
                         <PdpGalleryImage
                           src={pairedImage}
                           alt={getProductImageAlt(item, pairedImage, { color: pairedColor, index: 0, locale: language })}
                           sizes="(max-width: 768px) 50vw, 25vw"
-                          className="img-zoom object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                          className="img-zoom object-contain object-center transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                       </div>
-                      <div className="mt-3 flex min-w-0 items-start justify-between gap-2 sm:gap-3">
+                      <div className="mt-3 flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
                         <p data-product-name="true" className="min-w-0 flex-1 font-montserrat text-[10px] uppercase leading-snug tracking-[0.12em] text-brand-darkRed sm:text-[11px] sm:tracking-[0.14em]">
                           <span className="line-clamp-2">{item.name}</span>
                         </p>

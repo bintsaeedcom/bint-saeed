@@ -6,7 +6,7 @@ import LocaleLink from '@/components/LocaleLink'
 import DiscoverDestinationGrid from '@/components/DiscoverDestinationGrid'
 import CodesOrganicBand from '@/components/CodesOrganicBand'
 import { FiTrash2, FiPlus, FiMinus, FiArrowLeft, FiArrowRight } from 'react-icons/fi'
-import { useCartStore, ensureCartHydrated } from '@/store/cartStore'
+import { useCartStore, ensureCartHydrated, useCartReady } from '@/store/cartStore'
 import { useCurrency } from '@/lib/currency/CurrencyContext'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { commerceUi } from '@/lib/i18n/commerceUi'
@@ -31,6 +31,7 @@ import TabbyPromoSnippet from '@/components/TabbyPromoSnippet'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, hasHydrated } = useCartStore()
+  const cartReady = useCartReady()
   const mobileBarRef = useRef<HTMLDivElement | null>(null)
   const productHref = (item: (typeof items)[number]) =>
     item.productUrl ?? getProductHref(staticProducts.find((product) => product.id === item.id) ?? { id: item.id, name: item.name })
@@ -106,7 +107,7 @@ export default function CartPage() {
     }
   }, [hasHydrated])
 
-  if (!hasHydrated) {
+  if (!cartReady) {
     return (
       <div className={`flex min-h-screen items-center justify-center bg-brand-pageCanvas font-montserrat text-brand-clayRed/70 ${SITE_CONTENT_TOP_PAD}`}>
         {ui.checkout.redirecting}
