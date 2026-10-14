@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { rateLimitResponse } from '@/lib/security/rateLimit'
+import { lockedCustomerIdForPromo, promoCustomerMatchesEmail } from '@/lib/stripe/promoCustomerLock'
 
 function getStripeSecretKey(): string | null {
   const key = process.env.STRIPE_SECRET_KEY?.trim()
@@ -30,12 +31,12 @@ export async function POST(request: NextRequest) {
   if (rl) return rl
 
   try {
-    const { code } = await request.json()
+    const { code, email } = await request.json()
     if (!code || typeof code !== 'string') {
       return NextResponse.json({ valid: false, message: 'Enter a code' }, { status: 400 })
     }
 
-    const trimmed = code.trim()
+    const trimmed = code.trim().replace(/^#+\s*/, '')
     if (!trimmed) {
       return NextResponse.json({ valid: false, message: 'Enter a code' }, { status: 400 })
     }
@@ -54,6 +55,23 @@ export async function POST(request: NextRequest) {
     const pc = promotionCodes.data[0]
     if (pc.max_redemptions && pc.times_redeemed >= pc.max_redemptions) {
       return NextResponse.json({ valid: false, message: 'This code has reached its usage limit.' })
+    }
+
+    const lockedCustomerId = lockedCustomerIdForPromo(pc)
+    if (lockedCustomerId) {
+      const emailInput = typeof email === 'string' ? email.trim().toLowerCase() : ''
+      if (!emailInput) {
+        return NextResponse.json({ valid: false, requiresEmail: true })
+      }
+      if (!(await promoCustomerMatchesEmail(stripe, lockedCustomerId, emailInput))) {
+        return NextResponse.json({ valid: false, requiresEmail: true, emailMismatch: true })
+      }
+      return NextResponse.json({
+        valid: true,
+        message: 'Code applied.',
+        code: pc.code,
+        email: emailInput,
+      })
     }
 
     return NextResponse.json({

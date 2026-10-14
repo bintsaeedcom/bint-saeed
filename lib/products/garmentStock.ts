@@ -12,6 +12,8 @@ interface GarmentStockRule {
   soldOutColors?: readonly string[]
   /** Applies across all colours. */
   soldOutSizes?: readonly string[]
+  /** Sizes sold out in one colour only. Keys are colour names. */
+  soldOutSizesByColor?: Readonly<Record<string, readonly string[]>>
   /** Applies across all colours. */
   lowStockSizes?: readonly string[]
 }
@@ -19,8 +21,17 @@ interface GarmentStockRule {
 const GARMENT_STOCK_BY_SLUG: Record<string, GarmentStockRule> = {
   'mayfair-kaftan': { soldOut: true },
   'nothing-hill-kaftan': { soldOut: true },
-  'knightsbridge-abaya-jacket': { soldOutColors: ['Dark Brown'] },
-  'marylebone-abaya': { soldOut: true },
+  'knightsbridge-abaya-jacket': {
+    soldOutSizesByColor: {
+      'Dark Brown': ['M', 'L', 'XL', 'XXL'],
+    },
+  },
+  'marylebone-abaya': {
+    soldOutSizesByColor: {
+      Black: ['S', 'L', 'XL', 'XXL'],
+      'Navy Blue': ['XL'],
+    },
+  },
   'kensington-abaya': { soldOut: true },
   'soho-set': { soldOutSizes: ['XL', 'XXL'], lowStockSizes: ['S', 'M'] },
 }
@@ -47,17 +58,33 @@ export function isColorSoldOut(product: StockProduct, color: string | undefined)
   return Boolean(rule.soldOut) || includesName(rule.soldOutColors, color)
 }
 
-export function isSizeSoldOut(product: StockProduct, size: string | undefined): boolean {
+function soldOutSizesForColor(rule: GarmentStockRule, color: string | undefined): readonly string[] | undefined {
+  const trimmed = color?.trim().toLowerCase()
+  if (!rule.soldOutSizesByColor || !trimmed) return undefined
+  const key = Object.keys(rule.soldOutSizesByColor).find((name) => name.toLowerCase() === trimmed)
+  return key ? rule.soldOutSizesByColor[key] : undefined
+}
+
+/** Pass `color` whenever one is selected — some sizes are sold out in a single colour only. */
+export function isSizeSoldOut(
+  product: StockProduct,
+  size: string | undefined,
+  color?: string,
+): boolean {
   const rule = ruleFor(product)
   if (!rule) return false
-  return Boolean(rule.soldOut) || includesName(rule.soldOutSizes, size)
+  return (
+    Boolean(rule.soldOut) ||
+    includesName(rule.soldOutSizes, size) ||
+    includesName(soldOutSizesForColor(rule, color), size)
+  )
 }
 
 export function isVariantSoldOut(
   product: StockProduct,
   variant: { color?: string; size?: string },
 ): boolean {
-  return isColorSoldOut(product, variant.color) || isSizeSoldOut(product, variant.size)
+  return isColorSoldOut(product, variant.color) || isSizeSoldOut(product, variant.size, variant.color)
 }
 
 export function isVariantLowStock(
@@ -84,8 +111,12 @@ export function firstAvailableColor(
   return colors.find((color) => !isColorSoldOut(product, color.name))?.name ?? colors[0]?.name
 }
 
-export function firstAvailableSize(product: StockProduct, sizes: readonly string[]): string | undefined {
-  return sizes.find((size) => !isSizeSoldOut(product, size)) ?? sizes[0]
+export function firstAvailableSize(
+  product: StockProduct,
+  sizes: readonly string[],
+  color?: string,
+): string | undefined {
+  return sizes.find((size) => !isSizeSoldOut(product, size, color)) ?? sizes[0]
 }
 
 /** Server-side guard for cart lines keyed by catalogue product or accessory id. */

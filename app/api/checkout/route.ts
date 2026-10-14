@@ -45,7 +45,7 @@ async function createStripeSession(
   })
   await attachStripeCustomerToCheckoutSession(stripe, sessionOptions, parsed.customerEmail)
   if (parsed.discountCode) {
-    await applyCheckoutDiscountCode(stripe, sessionOptions, parsed.discountCode)
+    await applyCheckoutDiscountCode(stripe, sessionOptions, parsed.discountCode, parsed.customerEmail)
   }
   if (giftCredit.ok && giftCredit.credit) {
     await applyGiftCardCreditToStripeSession(stripe, sessionOptions, giftCredit.credit)

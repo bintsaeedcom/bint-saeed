@@ -125,6 +125,7 @@ function CheckoutPageContent() {
   const form = getCheckoutFormCopy(language)
   const [appliedGiftCard, setAppliedGiftCard] = useState<AppliedGiftCardPreview | null>(null)
   const [appliedPromoCode, setAppliedPromoCode] = useState<string | null>(null)
+  const [promoPersonalEmail, setPromoPersonalEmail] = useState<string | null>(null)
   const requiresPhysicalShipping = cartRequiresPhysicalShipping(items)
   const merchandiseSubtotal = Number(cartSubtotal(items).toFixed(2))
   const [countryCode, setCountryCode] = useState<string | null>(null)
@@ -460,7 +461,7 @@ function CheckoutPageContent() {
     currency: currency.code,
     discountCode: appliedPromoCode || undefined,
     appliedGiftCardCode: appliedGiftCard?.code || undefined,
-    customerEmail: tamaraEmail.trim() || undefined,
+    customerEmail: promoPersonalEmail || tamaraEmail.trim() || undefined,
     clientContext: {
       localTime: new Date().toString(),
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown',
@@ -1044,7 +1045,10 @@ function CheckoutPageContent() {
                 )}
                 <CheckoutPromoCodeApply
                   appliedCode={appliedPromoCode}
-                  onApplied={setAppliedPromoCode}
+                  onApplied={(code, personalEmail) => {
+                    setAppliedPromoCode(code)
+                    setPromoPersonalEmail(code ? personalEmail ?? null : null)
+                  }}
                 />
                 <CheckoutGiftCardApply
                   items={items}

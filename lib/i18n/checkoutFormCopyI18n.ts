@@ -32,6 +32,8 @@ export type CheckoutFormCopy = {
   promoEnterCode: string
   promoInvalid: string
   promoUnable: string
+  promoPersonalEmail: string
+  promoPersonalMismatch: string
 }
 
 const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
@@ -67,6 +69,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Enter a promo code.',
     promoInvalid: 'This code is not valid or has expired.',
     promoUnable: 'Unable to verify code right now.',
+    promoPersonalEmail: 'Your House Privilege is personal. Enter the email address it was issued to.',
+    promoPersonalMismatch: 'This privilege is linked to a different email address.',
   },
   ar: {
     payLaterTabby: 'ادفع لاحقًا مع تابي',
@@ -100,6 +104,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'أدخلي رمزاً ترويجياً.',
     promoInvalid: 'هذا الرمز غير صالح أو منتهٍ.',
     promoUnable: 'تعذر التحقق من الرمز الآن.',
+    promoPersonalEmail: 'امتياز الدار شخصي. أدخلي البريد الإلكتروني الذي صدر باسمه.',
+    promoPersonalMismatch: 'هذا الامتياز مرتبط ببريد إلكتروني آخر.',
   },
   fr: {
     payLaterTabby: 'Payer plus tard avec Tabby',
@@ -133,6 +139,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Saisissez un code promo.',
     promoInvalid: 'Ce code n’est pas valide ou a expiré.',
     promoUnable: 'Impossible de vérifier le code pour le moment.',
+    promoPersonalEmail: 'Votre privilège de la Maison est personnel. Saisissez l’adresse e-mail à laquelle il a été attribué.',
+    promoPersonalMismatch: 'Ce privilège est associé à une autre adresse e-mail.',
   },
   it: {
     payLaterTabby: 'Paga dopo con Tabby',
@@ -166,6 +174,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Inserisci un codice promo.',
     promoInvalid: 'Questo codice non è valido o è scaduto.',
     promoUnable: 'Impossibile verificare il codice ora.',
+    promoPersonalEmail: 'Il tuo Privilegio della Maison è personale. Inserisci l’indirizzo e-mail a cui è stato attribuito.',
+    promoPersonalMismatch: 'Questo privilegio è associato a un altro indirizzo e-mail.',
   },
   es: {
     payLaterTabby: 'Paga más tarde con Tabby',
@@ -199,6 +209,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Introduce un código promocional.',
     promoInvalid: 'Este código no es válido o ha caducado.',
     promoUnable: 'No se pudo verificar el código ahora.',
+    promoPersonalEmail: 'Tu Privilegio de la Casa es personal. Introduce el correo al que fue concedido.',
+    promoPersonalMismatch: 'Este privilegio está vinculado a otro correo.',
   },
   de: {
     payLaterTabby: 'Später bezahlen mit Tabby',
@@ -232,6 +244,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Aktionscode eingeben.',
     promoInvalid: 'Dieser Code ist ungültig oder abgelaufen.',
     promoUnable: 'Code konnte gerade nicht geprüft werden.',
+    promoPersonalEmail: 'Ihr Hausprivileg ist persönlich. Geben Sie die E-Mail-Adresse ein, für die es ausgestellt wurde.',
+    promoPersonalMismatch: 'Dieses Privileg ist mit einer anderen E-Mail-Adresse verknüpft.',
   },
   nl: {
     payLaterTabby: 'Later betalen met Tabby',
@@ -265,6 +279,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Voer een promotiecode in.',
     promoInvalid: 'Deze code is ongeldig of verlopen.',
     promoUnable: 'Code kon nu niet worden gecontroleerd.',
+    promoPersonalEmail: 'Uw House Privilege is persoonlijk. Voer het e-mailadres in waarop het is uitgegeven.',
+    promoPersonalMismatch: 'Dit privilege is gekoppeld aan een ander e-mailadres.',
   },
   pt: {
     payLaterTabby: 'Pagar mais tarde com Tabby',
@@ -298,6 +314,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Introduza um código promocional.',
     promoInvalid: 'Este código não é válido ou expirou.',
     promoUnable: 'Não foi possível verificar o código agora.',
+    promoPersonalEmail: 'O seu Privilégio da Casa é pessoal. Introduza o e-mail para o qual foi emitido.',
+    promoPersonalMismatch: 'Este privilégio está associado a outro e-mail.',
   },
   ru: {
     payLaterTabby: 'Оплатить позже с Tabby',
@@ -331,6 +349,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Введите промокод.',
     promoInvalid: 'Этот код недействителен или истёк.',
     promoUnable: 'Не удалось проверить код сейчас.',
+    promoPersonalEmail: 'Привилегия Дома персональна. Укажите e-mail, на который она была выдана.',
+    promoPersonalMismatch: 'Эта привилегия связана с другим адресом e-mail.',
   },
   zh: {
     payLaterTabby: '使用 Tabby 稍后付款',
@@ -364,6 +384,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: '请输入优惠码。',
     promoInvalid: '此优惠码无效或已过期。',
     promoUnable: '暂时无法验证优惠码。',
+    promoPersonalEmail: 'House Privilege 为您个人专享，请输入获赠时使用的邮箱。',
+    promoPersonalMismatch: '此礼遇已绑定其他邮箱。',
   },
   id: {
     payLaterTabby: 'Bayar nanti dengan Tabby',
@@ -397,6 +419,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Masukkan kode promo.',
     promoInvalid: 'Kode ini tidak valid atau sudah kedaluwarsa.',
     promoUnable: 'Tidak dapat memverifikasi kode sekarang.',
+    promoPersonalEmail: 'House Privilege Anda bersifat pribadi. Masukkan alamat email penerimanya.',
+    promoPersonalMismatch: 'Privilege ini terhubung dengan alamat email lain.',
   },
   ms: {
     payLaterTabby: 'Bayar kemudian dengan Tabby',
@@ -430,6 +454,8 @@ const BY_LOCALE: Record<AppLocale, CheckoutFormCopy> = {
     promoEnterCode: 'Masukkan kod promo.',
     promoInvalid: 'Kod ini tidak sah atau telah tamat.',
     promoUnable: 'Tidak dapat mengesahkan kod sekarang.',
+    promoPersonalEmail: 'House Privilege anda bersifat peribadi. Masukkan alamat e-mel penerimanya.',
+    promoPersonalMismatch: 'Privilege ini dipautkan kepada alamat e-mel lain.',
   },
 }
 

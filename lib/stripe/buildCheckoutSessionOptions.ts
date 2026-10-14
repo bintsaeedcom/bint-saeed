@@ -11,6 +11,7 @@ import {
   buildProvisionalStripeShippingOption,
 } from '@/lib/stripe/buildStripeShippingOption'
 import { STRIPE_SHIPPING_ALLOWED_COUNTRIES } from '@/lib/stripe/stripeShippingAllowedCountries'
+import { lockedCustomerIdForPromo, promoCustomerMatchesEmail } from '@/lib/stripe/promoCustomerLock'
 import {
   cartRequiresPhysicalShipping,
   compactGiftCardMetaForStripe,
@@ -195,6 +196,7 @@ export async function applyCheckoutDiscountCode(
   stripe: Stripe,
   sessionOptions: Stripe.Checkout.SessionCreateParams,
   discountCode: string,
+  customerEmail?: string,
 ): Promise<void> {
   if (!discountCode) return
 
@@ -206,6 +208,13 @@ export async function applyCheckoutDiscountCode(
     })
 
     if (promotionCodes.data.length > 0) {
+      const lockedCustomerId = lockedCustomerIdForPromo(promotionCodes.data[0])
+      if (lockedCustomerId) {
+        if (!(await promoCustomerMatchesEmail(stripe, lockedCustomerId, customerEmail))) return
+        sessionOptions.customer = lockedCustomerId
+        delete sessionOptions.customer_email
+        delete sessionOptions.customer_creation
+      }
       const existing = Array.isArray(sessionOptions.discounts) ? [...sessionOptions.discounts] : []
       sessionOptions.discounts = [
         ...existing,

@@ -6,7 +6,7 @@ import { getCheckoutFormCopy } from '@/lib/i18n/checkoutFormCopyI18n'
 
 type Props = {
   appliedCode: string | null
-  onApplied: (code: string | null) => void
+  onApplied: (code: string | null, personalEmail?: string | null) => void
   onDark?: boolean
 }
 
@@ -18,12 +18,14 @@ export default function CheckoutPromoCodeApply({
   const { language } = useLanguage()
   const form = getCheckoutFormCopy(language)
   const [code, setCode] = useState(appliedCode ?? '')
+  const [email, setEmail] = useState('')
+  const [needsEmail, setNeedsEmail] = useState(false)
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
 
   async function onApply(e: React.FormEvent) {
     e.preventDefault()
-    const trimmed = code.trim().toUpperCase()
+    const trimmed = code.trim().replace(/^#+\s*/, '').toUpperCase()
     if (!trimmed) {
       setMessage(form.promoEnterCode)
       return
@@ -34,12 +36,21 @@ export default function CheckoutPromoCodeApply({
       const res = await fetch('/api/checkout/validate-discount', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: trimmed }),
+        body: JSON.stringify({ code: trimmed, email: needsEmail ? email.trim() : undefined }),
       })
       const data = (await res.json()) as {
         valid?: boolean
         message?: string
         code?: string
+        email?: string
+        requiresEmail?: boolean
+        emailMismatch?: boolean
+      }
+      if (data.requiresEmail) {
+        onApplied(null)
+        setNeedsEmail(true)
+        setMessage(data.emailMismatch ? form.promoPersonalMismatch : form.promoPersonalEmail)
+        return
       }
       if (!res.ok || !data.valid) {
         onApplied(null)
@@ -47,7 +58,7 @@ export default function CheckoutPromoCodeApply({
         return
       }
       const applied = (data.code || trimmed).toUpperCase()
-      onApplied(applied)
+      onApplied(applied, data.email ?? null)
       setCode(applied)
       setMessage(null)
     } catch {
@@ -91,6 +102,8 @@ export default function CheckoutPromoCodeApply({
             onClick={() => {
               onApplied(null)
               setCode('')
+              setEmail('')
+              setNeedsEmail(false)
               setMessage(null)
             }}
             className={`${btnClass} w-full sm:w-auto`}
@@ -99,20 +112,37 @@ export default function CheckoutPromoCodeApply({
           </button>
         </div>
       ) : (
-        <form onSubmit={onApply} className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-stretch">
+        <form onSubmit={onApply} className="mt-2 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-stretch">
           <input
             type="text"
             value={code}
-            onChange={(e) => setCode(e.target.value.toUpperCase())}
+            onChange={(e) => {
+              setCode(e.target.value.toUpperCase())
+              if (needsEmail) {
+                setNeedsEmail(false)
+                setMessage(null)
+              }
+            }}
             placeholder={form.promoPlaceholder}
             autoComplete="off"
             spellCheck={false}
-            className={inputClass}
+            className={`${inputClass} sm:min-w-0 sm:flex-1`}
             aria-label={form.promoCode}
           />
           <button type="submit" disabled={busy} className={btnClass}>
             {busy ? form.promoApplying : form.promoApply}
           </button>
+          {needsEmail ? (
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={form.email}
+              autoComplete="email"
+              className={`${inputClass} sm:basis-full`}
+              aria-label={form.email}
+            />
+          ) : null}
         </form>
       )}
       {message ? (

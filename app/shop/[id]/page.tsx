@@ -288,11 +288,11 @@ export default function ProductPage() {
     }
     if (!sizeOptions.length) return
     setSelectedSize((current) =>
-      current && sizeOptions.includes(current) && !isSizeSoldOut(product, current)
+      current && sizeOptions.includes(current) && !isSizeSoldOut(product, current, selectedColor)
         ? current
-        : firstAvailableSize(product, sizeOptions) ?? '',
+        : firstAvailableSize(product, sizeOptions, selectedColor) ?? '',
     )
-  }, [sizeOptions, product.id, product.slug, product.sizes])
+  }, [sizeOptions, product.id, product.slug, product.sizes, selectedColor])
 
   useEffect(() => {
     const availableColors = colorOptions.map((color) => color.name)
@@ -1008,7 +1008,7 @@ export default function ProductPage() {
               </div>
               <div className={`flex flex-wrap gap-2 `}>
                 {sizeOptions.map((size) => {
-                  const sizeSoldOut = isSizeSoldOut(product, size)
+                  const sizeSoldOut = isSizeSoldOut(product, size, selectedColor)
                   return (
                   <button
                     key={size}

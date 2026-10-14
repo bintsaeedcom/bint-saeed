@@ -120,7 +120,7 @@ export function parseCheckoutRequestBody(
   }
 
   const currency = normalizeCurrencyCode(typeof body.currency === 'string' ? body.currency : 'AED')
-  const discountCode = typeof body.discountCode === 'string' ? body.discountCode.trim().slice(0, 64) : ''
+  const discountCode = typeof body.discountCode === 'string' ? body.discountCode.trim().replace(/^#+\s*/, '').slice(0, 64) : ''
   const appliedGiftCardCode =
     typeof body.appliedGiftCardCode === 'string'
       ? body.appliedGiftCardCode.trim().slice(0, 40)

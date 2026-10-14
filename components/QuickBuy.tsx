@@ -148,11 +148,12 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
   useEffect(() => {
     if (!isOpen) return
     const slugOnly = { slug: product.slug ?? '' }
-    setSelectedColor(firstAvailableColor(slugOnly, colorOptions) ?? '')
+    const initialColor = firstAvailableColor(slugOnly, colorOptions) ?? ''
+    setSelectedColor(initialColor)
     if (
       initialSize &&
       product.sizes.includes(initialSize) &&
-      !isSizeSoldOut(slugOnly, initialSize)
+      !isSizeSoldOut(slugOnly, initialSize, initialColor)
     ) {
       setSelectedSize(initialSize)
     } else if (product.sizes.length === 1) {
@@ -160,9 +161,19 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
     } else if (productIsOneSizeOnly({ slug: product.slug, sizes: product.sizes })) {
       setSelectedSize('One Size')
     } else {
-      setSelectedSize(firstAvailableSize(slugOnly, product.sizes) ?? '')
+      setSelectedSize(firstAvailableSize(slugOnly, product.sizes, initialColor) ?? '')
     }
   }, [isOpen, initialSize, product.id, product.slug, product.sizes, colorOptions])
+
+  useEffect(() => {
+    if (!isOpen || !selectedColor || product.sizes.length <= 1) return
+    const slugOnly = { slug: product.slug ?? '' }
+    setSelectedSize((current) =>
+      current && !isSizeSoldOut(slugOnly, current, selectedColor)
+        ? current
+        : firstAvailableSize(slugOnly, product.sizes, selectedColor) ?? current,
+    )
+  }, [isOpen, selectedColor, product.slug, product.sizes])
 
   useEffect(() => {
     if (!isOpen) return
@@ -390,7 +401,7 @@ export default function QuickBuy({ isOpen, onClose, initialSize, product }: Quic
                   </label>
                   <div className={`flex flex-wrap gap-2 `}>
                     {product.sizes.map((size) => {
-                      const sizeSoldOut = isSizeSoldOut(stockProduct, size)
+                      const sizeSoldOut = isSizeSoldOut(stockProduct, size, selectedColor)
                       return (
                       <button
                         key={size}
